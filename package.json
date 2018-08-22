@@ -1,0 +1,27 @@
+{
+  "name": "ms-superheroes",
+  "version": "1.0.0",
+  "description": "Super Heroes catalogue microservice",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bolzon/ms-superheroes.git"
+  },
+  "author": "Bolzon <blzn@mail.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bolzon/ms-superheroes/issues"
+  },
+  "homepage": "https://github.com/bolzon/ms-superheroes#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
