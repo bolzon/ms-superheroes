@@ -1,3 +1,18 @@
 {
-	"port": 3000
+	"port": 3000,
+	"db": {
+		"database": "superheroes",
+		"username": "",
+		"password": "",
+		"params": {
+			"host": "localhost",
+			"dialect": "mysql",
+			"logging": false,
+			"operatorsAliases": false,
+			"storage": "superheroes",
+			"define": {
+				"underscored": true
+			}
+		}
+	}
 }
