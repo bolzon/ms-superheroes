@@ -14,5 +14,5 @@ module.exports = app => {
 		res.json({ status: 'ok', route: __filename });
 	});
 
-	return router;
+	app.use('/users', router);
 };

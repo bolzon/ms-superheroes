@@ -1,8 +1,13 @@
 
-const app = require('./api');
-const db = require('./db')(app);
+const consign = require('consign');
+const app = require('express')();
 
-db.sequelize.sync().done(async () => {
-	await app.listen(process.env.PORT || 3000);
-	console.log(`Server up on port ${app.config.port}`);
-});
+consign({ verbose: false, cwd: 'api' })
+	.include('config.json')
+	.then('db.js')
+	.then('auth.js')
+	.then('middlewares.js')
+	.then('routes')
+	.then('lib')
+	.then('init.js')
+	.into(app);

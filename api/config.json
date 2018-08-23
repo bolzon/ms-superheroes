@@ -1,5 +1,11 @@
 {
 	"port": 3000,
+	"auth": {
+		"keyPath": "./api/auth-secret.der",
+		"jwtSession": {
+			"session": false
+		}
+	},
 	"db": {
 		"database": "superheroes",
 		"username": "superuser",

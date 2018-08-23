@@ -12,7 +12,7 @@ module.exports = app => {
 		app.config.db.params
 	);
 
-	const db = app.db = {
+	const db = {
 		sequelize,
 		Sequelize,
 		models: {}
