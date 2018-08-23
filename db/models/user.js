@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataType) => {
 
-	const User = sequelize.define('Users', {
+	const User = sequelize.define('User', {
 		id: {
 			type: DataType.INTEGER.UNSIGNED,
 			primaryKey: true,
@@ -13,7 +13,8 @@ module.exports = (sequelize, DataType) => {
 		},
 		username: {
 			type: DataType.STRING,
-			allowNull: false
+			allowNull: false,
+			unique: true
 		},
 		password: {
 			type: DataType.STRING,
@@ -31,7 +32,7 @@ module.exports = (sequelize, DataType) => {
 	});
 
 	User.checkPassword = (encodedPassword, password) => {
-		return bcrypt.compareSync(password, encodedPassword);
+		//return bcrypt.compareSync(password, encodedPassword);
 	};
 
 	return User;

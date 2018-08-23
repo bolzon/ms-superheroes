@@ -1,5 +1,5 @@
 
-const app = require('./app');
+const app = require('./api');
 const db = require('./db')(app);
 
 db.sequelize.sync().done(async () => {
