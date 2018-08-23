@@ -15,7 +15,6 @@
   "license": "ISC",
   "homepage": "https://github.com/bolzon/ms-superheroes#readme",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "consign": "^0.1.6",
