@@ -1,7 +1,7 @@
 
 const assert = require('assert');
 
-describe('Users', () => {
+describe('SuperPowers', () => {
 
 	describe('# view all', () => {
 		it('should view all entities, paginating them correctly', async done => {
@@ -17,6 +17,12 @@ describe('Users', () => {
 
 	describe('# delete', () => {
 		it('should delete an existing entity', async done => {
+			done(new Error('not implemented'));
+		});
+	});
+
+	describe('# delete with associations', () => {
+		it('should delete an existing entity with associations', async done => {
 			done(new Error('not implemented'));
 		});
 	});

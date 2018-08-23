@@ -1,7 +1,7 @@
 
 const assert = require('assert');
 
-describe('Users', () => {
+describe('SuperHeroes', () => {
 
 	describe('# view all', () => {
 		it('should view all entities, paginating them correctly', async done => {
