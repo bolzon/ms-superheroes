@@ -1,6 +1,8 @@
 
 # Super Heroes Catalogue
 
+![Build Status](https://travis-ci.org/bolzon/ms-superheroes.svg?branch=master)
+
 NodeJS application to make simple CRUD operations for a catalogue of Super Heroes.
 
 ## Install, test, run
