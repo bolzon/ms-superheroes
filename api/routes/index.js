@@ -1,7 +1,12 @@
 
+const router = require('express').Router();
+
 module.exports = app => {
 
-	app.get('/', async (req, res) => {
+	router.get('/', async (req, res) => {
 		res.type('text').send('SUPER HEROES CATALOGUE').end();
 	});
+
+	app.use('/', router);
+	return router;
 };

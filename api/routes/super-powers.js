@@ -1,6 +1,5 @@
 
 const router = require('express').Router();
-const superPowersCtrl = require('../controllers/super-powers');
 
 module.exports = app => {
 
@@ -17,4 +16,5 @@ module.exports = app => {
 	});
 
 	app.use('/super-powers', router);
+	return router;
 };

@@ -1,7 +1,10 @@
 
+const router = require('express').Router();
+
 module.exports = app => {
 
-	app.all('/auth', async (req, res) => {
-		res.json({ status: 'ok', route: __filename });
-	});
+	router.all('/', app.controllers.auth.token);
+
+	app.use('/auth', router);
+	return router;
 };
