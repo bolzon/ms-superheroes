@@ -4,6 +4,8 @@ const usersCtrl = require('../controllers/users');
 
 module.exports = app => {
 
+	router.use(app.auth.authenticate());
+
 	// list users
 	// create user
 	// update user

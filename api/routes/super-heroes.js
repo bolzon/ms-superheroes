@@ -4,6 +4,8 @@ const superHeroesCtrl = require('../controllers/super-heroes');
 
 module.exports = app => {
 
+	router.use(app.auth.authenticate());
+
 	// list superheroes
 	// create superhero
 	// update superhero

@@ -4,6 +4,8 @@ const superPowersCtrl = require('../controllers/super-powers');
 
 module.exports = app => {
 
+	router.use(app.auth.authenticate());
+
 	// list superpowers
 	// create superpower
 	// update superpower
