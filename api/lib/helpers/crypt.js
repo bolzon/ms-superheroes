@@ -3,21 +3,45 @@
  * @module lib/helpers/crypt
  */
 
+const fs = require('fs');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const config = JSON.parse(fs.readFileSync('./api/config.json'));
+config.token.secret = fs.readFileSync(config.auth.keyPath);
 
 /**
- * More about salt rounds can be found in
- * [official page](https://github.com/kelektiv/node.bcrypt.js#a-note-on-rounds).
+ * Generates a JWT with the given payload.
+ * @param {Object} payload JSON object representing JWT payload.
+ * @returns {String} JWT in base64 format.
  */
-const SALT_ROUNDS = 10;
+module.exports.generateJWT = async payload => {
+	return await jwt.sign(payload, config.token.secret, {
+		algorithm: config.token.algorithm || 'ES512',
+		expiresIn: config.token.expiresIn || '1d'
+	});
+};
+
+/**
+ * Verifies whether a JWT is valid or not.
+ * @param {String} token JWT token.
+ * @return {Object} Decoded payload if token is valid or false value otherwise.
+ */
+module.exports.verifyJWT = async token => {
+	return await jwt.verify(token, config.token.secret, {
+		algorithm: config.token.algorithm || 'ES512',
+		expiresIn: config.token.expiresIn || '1d'
+	});
+};
 
 /**
  * Encodes a password by generating a new salt, crypting ans hashing it.
  * @param {String} password Password to be encoded as plain string.
  * @returns {String} Base64 encoded password.
  */
-module.exports.encodePassword = async (password) => {
-	const salt = await bcrypt.genSalt(SALT_ROUNDS);
+module.exports.encodePassword = async password => {
+	// more info at https://github.com/kelektiv/node.bcrypt.js#a-note-on-rounds
+	const salt = await bcrypt.genSalt(config.auth.saltRounds || 10);
 	return await bcrypt.hash(password, salt);
 };
 

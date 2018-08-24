@@ -1,10 +1,15 @@
 {
 	"port": 3000,
 	"auth": {
-		"keyPath": "./api/auth-secret.der",
+		"saltRounds": 10,
+		"keyPath": "./api/auth-secret.pem",
 		"jwtSession": {
 			"session": false
 		}
+	},
+	"token": {
+		"expiresIn": "1d",
+		"algorithm": "ES512"
 	},
 	"db": {
 		"database": "superheroes",

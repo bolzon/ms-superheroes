@@ -6,11 +6,12 @@ const { Strategy, ExtractJwt } = require('passport-jwt');
 module.exports = app => {
 
 	const User = app.db.models.User;
-	const secret = Buffer.from(fs.readFileSync(app.config.auth.keyPath)).toString('base64');
+	const secret = fs.readFileSync(app.config.auth.keyPath);
 
 	const opts = {
+		secretOrKey: secret,
 		jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-		secretOrKey: secret
+		algorithms: [ app.config.token.algorithm || 'ES512' ]
 	};
 
 	passport.use(new Strategy(opts, async (payload, done) => {

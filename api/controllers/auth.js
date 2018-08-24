@@ -1,4 +1,5 @@
 
+const crypt = require('../lib/helpers/crypt');
 const HttpStatus = require('../lib/helpers/http').status;
 
 module.exports = app => {
@@ -27,7 +28,13 @@ module.exports = app => {
 			});
 
 			if (user && await User.checkPassword(password, user.password)) {
-				res.json({ user });
+				res.json({
+					token: await crypt.generateJWT({
+						id: user.id,
+						name: user.name,
+						username: user.username
+					})
+				});
 			}
 			else {
 				res.sendError(HttpStatus.Unauthorized, 'Invalid credentials');
