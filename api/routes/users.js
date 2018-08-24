@@ -12,7 +12,7 @@ module.exports = app => {
 	// get single user
 
 	router.all('/', async (req, res) => {
-		res.json({ status: 'ok', route: __filename });
+		res.json({ loggedUser: req.user });
 	});
 
 	app.use('/users', router);

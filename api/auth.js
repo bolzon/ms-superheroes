@@ -10,15 +10,13 @@ module.exports = app => {
 
 	const opts = {
 		secretOrKey: secret,
-		jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-		algorithms: [ app.config.token.algorithm || 'ES512' ]
+		jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 	};
 
 	passport.use(new Strategy(opts, async (payload, done) => {
 		try {
-			console.log(payload);
 			const user = await User.findById(payload.id);
-			done(null, user ? { id: user.id } : null);
+			done(null, { id: user.id, name: user.name, username: user.username });
 		}
 		catch (ex) {
 			done(ex);

@@ -8,8 +8,7 @@
 		}
 	},
 	"token": {
-		"expiresIn": "1d",
-		"algorithm": "ES512"
+		"expiresIn": "1d"
 	},
 	"db": {
 		"database": "superheroes",

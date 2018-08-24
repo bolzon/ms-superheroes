@@ -17,7 +17,6 @@ config.token.secret = fs.readFileSync(config.auth.keyPath);
  */
 module.exports.generateJWT = async payload => {
 	return await jwt.sign(payload, config.token.secret, {
-		algorithm: config.token.algorithm || 'ES512',
 		expiresIn: config.token.expiresIn || '1d'
 	});
 };
@@ -29,7 +28,6 @@ module.exports.generateJWT = async payload => {
  */
 module.exports.verifyJWT = async token => {
 	return await jwt.verify(token, config.token.secret, {
-		algorithm: config.token.algorithm || 'ES512',
 		expiresIn: config.token.expiresIn || '1d'
 	});
 };
