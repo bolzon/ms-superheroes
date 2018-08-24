@@ -1,11 +1,43 @@
 
+const HttpStatus = require('../lib/helpers/http').status;
+
 module.exports = app => {
 
-	const authCtrl = {};
+	const ctrl = {};
+	const User = app.db.models.User;
 
-	authCtrl.token = async (req, res) => {
-		res.json({ status: 'ok' });
+	/**
+	 * Generates a new user token.
+	 * @param {Request} req Request object.
+	 * @param {Response} res Response object.
+	 */
+	ctrl.token = async (req, res) => {
+
+		try {
+			const { username, password } = req.body;
+
+			if (!username || !password) {
+				return res.sendError(HttpStatus.BadRequest, 'Username and password are required');
+			}
+
+			const user = await User.findOne({
+				where: {
+					username
+				}
+			});
+
+			if (user && await User.checkPassword(password, user.password)) {
+				res.json({ user });
+			}
+			else {
+				res.sendError(HttpStatus.Unauthorized, 'Invalid credentials');
+			}
+		}
+		catch (ex) {
+			console.log(ex);
+			res.sendError(HttpStatus.InternalServerError, 'Unexpected error');
+		}
 	};
 
-	return authCtrl;
+	return ctrl;
 };

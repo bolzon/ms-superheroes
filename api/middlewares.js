@@ -18,4 +18,9 @@ module.exports = app => {
 
 	app.use(compression());
 	app.use(app.auth.initialize());
+	app.use((req, res, next) => {
+		res.sendError = (status, message) =>
+			res.status(status).json({ message });
+		next();
+	});
 };

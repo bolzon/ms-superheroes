@@ -1,4 +1,6 @@
 
+const crypt = require('../lib/helpers/crypt');
+
 module.exports = (sequelize, DataType) => {
 
 	const User = sequelize.define('User', {
@@ -26,13 +28,12 @@ module.exports = (sequelize, DataType) => {
 		}
 	});
 
-	User.hook('beforeCreate', user => {
-		//const salt = bcrypt.genSaltSync();
-		//user.password = bcrypt.hashSync(user.password, salt);
+	User.hook('beforeCreate', async user => {
+		user.password = await crypt.encodePassword(user.password);
 	});
 
-	User.checkPassword = (encodedPassword, password) => {
-		//return bcrypt.compareSync(password, encodedPassword);
+	User.checkPassword = async (plainPassword, encodedPassword) => {
+		return await crypt.checkPassword(plainPassword, encodedPassword);
 	};
 
 	return User;
