@@ -17,7 +17,7 @@
 	},
 	"opts": {
 		"encoding": "utf-8",
-		"destination": "doc",
+		"destination": "docs",
 		"recurse": true
 	}
 }
