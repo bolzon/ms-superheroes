@@ -32,8 +32,12 @@ module.exports = app => {
 
 		if (!page || isNaN(page) || page < 1)
 			page = 1;
+
 		if (!perPage || isNaN(perPage) || perPage < 1)
 			perPage = app.config.defaultItemsPerPage;
+
+		if (perPage > 100)
+			perPage = 100;
 
 		req.query.offset = (page - 1) * perPage;
 		req.query.limit = perPage;
@@ -46,6 +50,11 @@ module.exports = app => {
 
 	// auxiliar functions to return error messages
 	app.use((req, res, next) => {
+
+		res.setTotalCount = (count) => {
+			res.header('X-Total-Count', count);
+			return res;
+		};
 
 		res.sendError = (status, message) =>
 			res.status(status).json({ message });

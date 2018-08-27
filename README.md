@@ -34,6 +34,29 @@ It was implemented following microservices architecture and provides a REST API 
 - Area of Protection
 - Users
 
+### API
+
+This microservice uses REST routes to access or modify contents.
+
+#### Considerations
+
+The REST API follows some standards, such as:
+
+##### Pagination
+
+List of contents is paginated and uses query params `page` and `per_page` to specify the range of contents you want to list.
+
+- `page` - the page you want to list
+- `per_page` - number of items to consider per page
+
+This standard was based on [GitHub pagination standard](https://developer.github.com/v3/guides/traversing-with-pagination/#navigating-through-the-pages), without considering the `Link` header.
+
+##### Total count
+
+When calling a route that returns a list of contents, apart from pagination standard, it also uses a header to specify the total number of items for the given query, so the client can adjust their pagination as they want.
+
+Total number of items is returned in header `X-Total-Count`.
+
 ### Authentication
 
 To call the API it's necessary to authenticate the caller through the `/auth` endpoint, that will return a JWT token to be used for every call as bearer token in `Authorization` header.

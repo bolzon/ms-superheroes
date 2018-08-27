@@ -15,7 +15,7 @@ module.exports = (sequelize, DataType) => {
 		alias: {
 			type: DataType.STRING
 		}
-	});
+	}, { timestamps: false });
 
 	SuperHero.associate = models => {
 		SuperHero.hasMany(models.SuperPower, {

@@ -26,7 +26,7 @@ module.exports = (sequelize, DataType) => {
 				len: [8, 12]
 			}
 		}
-	});
+	}, { timestamps: false });
 
 	User.hook('beforeCreate', async user => {
 		user.password = await crypt.encodePassword(user.password);

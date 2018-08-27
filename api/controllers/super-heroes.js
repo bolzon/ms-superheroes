@@ -7,19 +7,19 @@ module.exports = app => {
 	const SuperHero = app.db.models.SuperHero;
 
 	/**
-	 * Gets all users as paginated list.
+	 * Gets all super heroes as paginated list.
 	 * @param {Request} req Request object.
 	 * @param {Response} res Response object.
 	 */
 	ctrl.getAll = async (req, res) => {
 		const { offset, limit } = req.query;
 		try {
-			const superHeroes = await SuperHero.findAll({
+			const results = await SuperHero.findAndCountAll({
 				order: [ 'name' ],
 				offset,
 				limit
 			});
-			res.json(superHeroes);
+			res.setTotalCount(results.count).json(results.rows);
 		}
 		catch (ex) {
 			console.log(ex);

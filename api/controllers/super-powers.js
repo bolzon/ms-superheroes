@@ -14,12 +14,12 @@ module.exports = app => {
 	ctrl.getAll = async (req, res) => {
 		const { offset, limit } = req.query;
 		try {
-			const superHeroes = await SuperPower.findAll({
+			const results = await SuperPower.findAndCountAll({
 				order: [ 'name' ],
 				offset,
 				limit
 			});
-			res.json(superHeroes);
+			res.setTotalCount(results.count).json(results.rows);
 		}
 		catch (ex) {
 			console.log(ex);

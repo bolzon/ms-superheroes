@@ -12,7 +12,7 @@ module.exports = (sequelize, DataType) => {
 			allowNull: false,
 			unique: true
 		}
-	});
+	}, { timestamps: false });
 
 	return UserRole;
 }

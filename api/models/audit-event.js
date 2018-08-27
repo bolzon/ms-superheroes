@@ -26,7 +26,7 @@ module.exports = (sequelize, DataType) => {
 		action: {
 			type: DataType.STRING
 		}
-	});
+	}, { timestamps: false });
 
 	return AuditEvent;
 }

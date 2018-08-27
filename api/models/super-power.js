@@ -15,7 +15,7 @@ module.exports = (sequelize, DataType) => {
 		description: {
 			type: DataType.STRING
 		}
-	});
+	}, { timestamps: false });
 
 	SuperPower.associate = models => {
 		SuperPower.belongsTo(models.SuperHero);

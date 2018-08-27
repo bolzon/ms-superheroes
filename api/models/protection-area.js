@@ -21,7 +21,7 @@ module.exports = (sequelize, DataType) => {
 		radius: {
 			type: DataType.INTEGER
 		}
-	});
+	}, { timestamps: false });
 
 	return ProtectionArea;
 }

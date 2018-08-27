@@ -7,14 +7,14 @@ module.exports = app => {
 	const User = app.db.models.User;
 
 	/**
-	 * 
+	 * Gets all users as paginated list.
 	 * @param {Request} req Request object.
 	 * @param {Response} res Response object.
 	 */
 	ctrl.getAll = async (req, res) => {
 		const { offset, limit } = req.query;
 		try {
-			const users = await User.findAll({
+			const results = await User.findAndCountAll({
 				order: [ 'name' ],
 				attributes: {
 					exclude: [ 'password' ]
@@ -22,7 +22,7 @@ module.exports = app => {
 				offset,
 				limit
 			});
-			res.json(users);
+			res.setTotalCount(results.count).json(results.rows);
 		}
 		catch (ex) {
 			console.log(ex);
@@ -31,6 +31,7 @@ module.exports = app => {
 	};
 
 	ctrl.getSingle = async (req, res) => {
+
 		res.status(HttpStatus.NotImplemented).end();
 	};
 
