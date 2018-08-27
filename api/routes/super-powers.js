@@ -3,6 +3,8 @@ const router = require('express').Router();
 
 module.exports = app => {
 
+	const superPowersCtrl = app.controllers['super-powers'];
+
 	router.use(app.auth.authenticate());
 
 	// list superpowers
