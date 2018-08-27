@@ -1,5 +1,6 @@
 
 const router = require('express').Router();
+const authorization = require('../lib/helpers/authorization');
 
 module.exports = app => {
 
@@ -7,15 +8,14 @@ module.exports = app => {
 
 	router.use(app.auth.authenticate());
 
-	// list superpowers
-	// create superpower
-	// update superpower
-	// delete superpower
-	// get single superpower
+	router.get('/', superPowersCtrl.getAll);
+	router.get('/:id', superPowersCtrl.getSingle);
 
-	router.all('/', async (req, res) => {
-		res.json({ status: 'ok', route: __filename });
-	});
+	router.use(authorization.forAdminRole());
+
+	router.post('/', superPowersCtrl.create);
+	router.put('/', superPowersCtrl.update);
+	router.delete('/:id', superPowersCtrl.delete);
 
 	app.use('/super-powers', router);
 	return router;
