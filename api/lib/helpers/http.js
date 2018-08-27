@@ -4,7 +4,7 @@
  */
 
  /**
-  * HTTP status.
+  * List of static HTTP status to help controllers to return the right status code.
   */
 module.exports.status = Object.freeze({
 	Ok: 200,
