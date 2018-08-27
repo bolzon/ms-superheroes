@@ -65,6 +65,8 @@ module.exports = app => {
 		res.sendNotFound = () =>
 			res.sendError(HttpStatus.NotFound, 'Entity or resource not found');
 
+		res.ok = res.end;
+
 		next();
 	});
 };
