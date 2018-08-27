@@ -4,26 +4,22 @@ const crypt = require('../lib/helpers/crypt');
 module.exports = (sequelize, DataType) => {
 
 	const User = sequelize.define('User', {
-		id: {
-			type: DataType.INTEGER.UNSIGNED,
+		username: {
+			type: DataType.STRING,
+			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true
+			unique: true
 		},
 		name: {
 			type: DataType.STRING,
 			allowNull: false
-		},
-		username: {
-			type: DataType.STRING,
-			allowNull: false,
-			unique: true
 		},
 		password: {
 			type: DataType.STRING,
 			allowNull: false,
 			validate: {
 				notEmpty: true,
-				len: [8, 12]
+				len: [4, 12]
 			}
 		}
 	}, { timestamps: false });
@@ -34,6 +30,15 @@ module.exports = (sequelize, DataType) => {
 
 	User.checkPassword = async (plainPassword, encodedPassword) => {
 		return await crypt.checkPassword(plainPassword, encodedPassword);
+	};
+
+	User.associate = models => {
+		User.belongsTo(models.UserRole, {
+			foreignKey: {
+				name: 'roleId',
+				allowNull: false
+			}
+		});
 	};
 
 	return User;

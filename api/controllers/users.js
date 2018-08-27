@@ -25,14 +25,30 @@ module.exports = app => {
 			res.setTotalCount(results.count).json(results.rows);
 		}
 		catch (ex) {
-			console.log(ex);
+			console.error(ex);
 			res.sendUnexpectedError();
 		}
 	};
 
 	ctrl.getSingle = async (req, res) => {
+		const { username } = req.params;
+		if (!username)
+			return res.sendNotFound();
 
-		res.status(HttpStatus.NotImplemented).end();
+		try {
+			const user = await User.findOne({
+				where: { username },
+				attributes: {
+					exclude: [ 'password' ]
+				}
+			});
+
+			user ? res.json(user) : res.sendNotFound();
+		}
+		catch (ex) {
+			console.error(ex);
+			res.sendUnexpectedError();
+		}
 	};
 
 	ctrl.create = async (req, res) => {

@@ -15,12 +15,22 @@ module.exports = (sequelize, DataType) => {
 		alias: {
 			type: DataType.STRING
 		}
-	}, { timestamps: false });
+	}, {
+		timestamps: false,
+		tableName: 'SuperHeroes'
+	});
 
 	SuperHero.associate = models => {
-		SuperHero.hasMany(models.SuperPower, {
-			as: 'superpowers',
-			onDelete: 'CASCADE'
+		SuperHero.belongsToMany(models.SuperPower, {
+			through: 'SuperHeroesPowers',
+			foreignKey: 'superHeroId'
+		});
+
+		SuperHero.belongsTo(models.ProtectionArea, {
+			foreignKey: {
+				name: 'protectionAreaId',
+				allowNull: false
+			}
 		});
 	};
 

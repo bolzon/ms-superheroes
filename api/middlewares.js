@@ -62,6 +62,9 @@ module.exports = app => {
 		res.sendUnexpectedError = () =>
 			res.sendError(HttpStatus.InternalServerError, 'Unexpected error');
 
+		res.sendNotFound = () =>
+			res.sendError(HttpStatus.NotFound, 'Entity or resource not found');
+
 		next();
 	});
 };

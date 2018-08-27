@@ -8,10 +8,10 @@ module.exports = app => {
 	router.use(app.auth.authenticate());
 
 	router.get('/', usersCtrl.getAll);
-	router.get('/:id', usersCtrl.getSingle);
+	router.get('/:username', usersCtrl.getSingle);
 	router.post('/', usersCtrl.create);
 	router.put('/', usersCtrl.update);
-	router.delete('/:id', usersCtrl.delete);
+	router.delete('/:username', usersCtrl.delete);
 
 	app.use('/users', router);
 	return router;

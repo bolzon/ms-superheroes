@@ -21,20 +21,12 @@ module.exports = app => {
 				return res.sendError(HttpStatus.BadRequest, 'Username and password are required');
 			}
 
-			const user = await User.findOne({
-				where: {
-					username
-				}
-			});
+			const user = await User.findOne({ where: { username } });
 
 			if (user && await User.checkPassword(password, user.password)) {
-				res.json({
-					token: await crypt.generateJWT({
-						id: user.id,
-						name: user.name,
-						username: user.username
-					})
-				});
+				let jsonUser = user.toJSON();
+				delete jsonUser.password;
+				res.json({ token: await crypt.generateJWT(jsonUser) });
 			}
 			else {
 				res.sendError(HttpStatus.Unauthorized, 'Invalid credentials');

@@ -15,8 +15,15 @@ module.exports = app => {
 
 	passport.use(new Strategy(opts, async (payload, done) => {
 		try {
-			const user = await User.findById(payload.id);
-			done(null, { id: user.id, name: user.name, username: user.username });
+			const user = await User.findOne({
+				where: {
+					username: payload.username
+				},
+				attributes: {
+					exclude: [ 'password' ]
+				}
+			});
+			done(null, user);
 		}
 		catch (ex) {
 			done(ex);

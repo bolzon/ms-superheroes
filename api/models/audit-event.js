@@ -19,14 +19,20 @@ module.exports = (sequelize, DataType) => {
 			type: DataType.DATE,
 			allowNull: false
 		},
-		username: {
-			type: DataType.STRING,
-			allowNull: false
-		},
 		action: {
-			type: DataType.STRING
+			type: DataType.STRING,
+			
 		}
 	}, { timestamps: false });
+
+	AuditEvent.associate = models => {
+		AuditEvent.belongsTo(models.User, {
+			foreignKey: {
+				name: 'username',
+				allowNull: false
+			}
+		});
+	};
 
 	return AuditEvent;
 }
