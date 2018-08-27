@@ -3,31 +3,31 @@ const assert = require('assert');
 
 describe('SuperPowers', () => {
 
-	describe('# view all', () => {
+	describe('View all', () => {
 		it('should view all entities, paginating them correctly', async done => {
 			done();
 		});
 	});
 
-	describe('# create', () => {
+	describe('Create', () => {
 		it('should create a new entity', async done => {
 			done();
 		});
 	});
 
-	describe('# delete', () => {
+	describe('Delete', () => {
 		it('should delete an existing entity', async done => {
 			done();
 		});
 	});
 
-	describe('# delete with associations', () => {
+	describe('Delete with associations', () => {
 		it('should delete an existing entity with associations', async done => {
 			done();
 		});
 	});
 
-	describe('# update', () => {
+	describe('Update', () => {
 		it('should update an existing entity', async done => {
 			done();
 		});
