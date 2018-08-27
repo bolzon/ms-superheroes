@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: controllers/auth.js</title>
+    <title>JSDoc: Source: controllers/users.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: controllers/auth.js</h1>
+    <h1 class="page-title">Source: controllers/users.js</h1>
 
     
 
@@ -27,7 +27,6 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>
-const crypt = require('../lib/helpers/crypt');
 const HttpStatus = require('../lib/helpers/http').status;
 
 module.exports = app => {
@@ -36,42 +35,43 @@ module.exports = app => {
 	const User = app.db.models.User;
 
 	/**
-	 * Generates a new user token.
+	 * 
 	 * @param {Request} req Request object.
 	 * @param {Response} res Response object.
 	 */
-	ctrl.token = async (req, res) => {
-
+	ctrl.getAll = async (req, res) => {
+		const { offset, limit } = req.query;
 		try {
-			const { username, password } = req.body;
-
-			if (!username || !password) {
-				return res.sendError(HttpStatus.BadRequest, 'Username and password are required');
-			}
-
-			const user = await User.findOne({
-				where: {
-					username
-				}
+			const users = await User.findAll({
+				order: [ 'name' ],
+				attributes: {
+					exclude: [ 'password' ]
+				},
+				offset,
+				limit
 			});
-
-			if (user &amp;&amp; await User.checkPassword(password, user.password)) {
-				res.json({
-					token: await crypt.generateJWT({
-						id: user.id,
-						name: user.name,
-						username: user.username
-					})
-				});
-			}
-			else {
-				res.sendError(HttpStatus.Unauthorized, 'Invalid credentials');
-			}
+			res.json(users);
 		}
 		catch (ex) {
 			console.log(ex);
-			res.sendError(HttpStatus.InternalServerError, 'Unexpected error');
+			res.sendUnexpectedError();
 		}
+	};
+
+	ctrl.getSingle = async (req, res) => {
+		res.status(HttpStatus.NotImplemented).end();
+	};
+
+	ctrl.create = async (req, res) => {
+		res.status(HttpStatus.NotImplemented).end();
+	};
+
+	ctrl.update = async (req, res) => {
+		res.status(HttpStatus.NotImplemented).end();
+	};
+
+	ctrl.delete = async (req, res) => {
+		res.status(HttpStatus.NotImplemented).end();
 	};
 
 	return ctrl;
