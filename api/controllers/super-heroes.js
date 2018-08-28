@@ -4,6 +4,7 @@ const HttpStatus = require('../lib/helpers/http').status;
 module.exports = app => {
 
 	const SuperHero = app.db.models.SuperHero;
+	const SuperPower = app.db.models.SuperPower;
 
 	/** Super Heroes controller class. */
 	class SuperHeroesController {
@@ -18,13 +19,14 @@ module.exports = app => {
 			try {
 				const results = await SuperHero.findAndCountAll({
 					order: [ 'name' ],
+					include: [{ model: SuperPower }],
 					offset,
 					limit
 				});
 				res.setTotalCount(results.count).json(results.rows);
 			}
 			catch (ex) {
-				console.log(ex);
+				console.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -34,7 +36,15 @@ module.exports = app => {
 		 * @param {String} req.params.id Super hero id.
 		 */
 		static async getSingle(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const { id } = req.params;
+			try {
+				const superHero = await SuperHero.findOne({ where: { id } });
+				superHero ? res.json(superHero) : res.sendNotFound();
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
 		static async create(req, res) {
@@ -50,7 +60,19 @@ module.exports = app => {
 		 * @param {String} req.params.id Super hero id.
 		 */
 		static async delete(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const { id } = req.params;
+			try {
+				let superHero = await SuperHero.findOne({ where: { id } });
+				if (superHero) {
+					await superHero.destroy();
+					return res.ok();
+				}
+				res.sendNotFound();
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 	}
 

@@ -12,7 +12,7 @@ module.exports = app => {
 	router.get('/', usersCtrl.getAll);
 	router.get('/:username', usersCtrl.getSingle);
 	router.post('/', usersCtrl.create);
-	router.put('/', usersCtrl.update);
+	router.put('/:username', usersCtrl.update);
 	router.delete('/:username', usersCtrl.delete);
 
 	app.use('/users', router);

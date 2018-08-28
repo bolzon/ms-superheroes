@@ -24,7 +24,7 @@ module.exports = app => {
 				res.setTotalCount(results.count).json(results.rows);
 			}
 			catch (ex) {
-				console.log(ex);
+				console.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -34,7 +34,15 @@ module.exports = app => {
 		 * @param {String} req.params.id Super power id.
 		 */
 		static async getSingle(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const { id } = req.params;
+			try {
+				const superPower = await SuperPower.findOne({ where: { id } });
+				superPower ? res.json(superPower) : res.sendNotFound();
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
 		static async create(req, res) {
@@ -50,7 +58,23 @@ module.exports = app => {
 		 * @param {String} req.params.id Super power id.
 		 */
 		static async delete(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const { id } = req.params;
+			if (!id) {
+				return res.sendBadRequest('Missing "id"');
+			}
+
+			try {
+				let superPower = await SuperPower.findOne({ where: { id } });
+				if (superPower) {
+					await superPower.destroy();
+					return res.ok();
+				}
+				res.sendNotFound();
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 	}
 

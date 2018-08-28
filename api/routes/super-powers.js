@@ -14,7 +14,7 @@ module.exports = app => {
 	router.use(authorization.forAdminRole());
 
 	router.post('/', superPowersCtrl.create);
-	router.put('/', superPowersCtrl.update);
+	router.put('/:id', superPowersCtrl.update);
 	router.delete('/:id', superPowersCtrl.delete);
 
 	app.use('/super-powers', router);

@@ -38,9 +38,6 @@ module.exports = app => {
 		 */
 		static async getSingle(req, res) {
 			const { username } = req.params;
-			if (!username)
-				return res.sendNotFound();
-
 			try {
 				const user = await User.findOne({
 					where: { username },
@@ -57,12 +54,62 @@ module.exports = app => {
 			}
 		}
 
+		/**
+		 * Creates a new user.
+		 * @param {Object} req.body User object.
+		 */
 		static async create(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const user = req.body;
+			try {
+				let dbUser = await User.findOne({ where: { username: user.username } });
+				if (dbUser) {
+					return res.sendError(HttpStatus.UnprocessableEntity, 'Username already exists');
+				}
+
+				dbUser = await User.create(user, {
+					fields: [ 'username', 'name', 'password', 'roleId' ]
+				});
+
+				dbUser = dbUser.toJSON();
+				delete dbUser.password;
+
+				res.json(dbUser);
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
+		/**
+		 * Updates an existing user.
+		 * @param {String} req.params.username Username.
+		 * @param {Object} req.body User object.
+		 */
 		static async update(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const user = req.body;
+			const { username } = req.params;
+			try {
+				let dbUser = await User.findOne({ where: { username } });
+				if (!dbUser) {
+					return res.sendNotFound();
+				}
+
+				await User.update(user, {
+					where: { username: username },
+					fields: [ 'name', 'password', 'roleId' ]
+				});
+
+				dbUser = await User.findOne({ where: { username } });
+				dbUser = dbUser.toJSON();
+
+				delete dbUser.password;
+				res.json(dbUser);
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
 		/**
@@ -71,13 +118,10 @@ module.exports = app => {
 		 */
 		static async delete(req, res) {
 			const { username } = req.params;
-			if (!username)
-				return res.sendNotFound();
-
 			try {
 				let user = await User.findOne({ where: { username } });
 				if (user) {
-					user.destroy();
+					await user.destroy();
 					return res.ok();
 				}
 				res.sendNotFound();

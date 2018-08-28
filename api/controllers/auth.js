@@ -18,13 +18,11 @@ module.exports = app => {
 
 			try {
 				const { username, password } = req.body;
-
 				if (!username || !password) {
-					return res.sendError(HttpStatus.BadRequest, 'Username and password are required');
+					return res.sendBadRequest('Username and password are required');
 				}
 
 				const user = await User.findOne({ where: { username } });
-
 				if (user && await User.checkPassword(password, user.password)) {
 					let jsonUser = user.toJSON();
 					delete jsonUser.password;
@@ -35,7 +33,7 @@ module.exports = app => {
 				}
 			}
 			catch (ex) {
-				console.log(ex);
+				console.error(ex);
 				res.sendError(HttpStatus.InternalServerError, 'Unexpected error');
 			}
 		}

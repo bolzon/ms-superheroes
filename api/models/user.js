@@ -28,6 +28,12 @@ module.exports = (sequelize, DataType) => {
 		user.password = await crypt.encodePassword(user.password);
 	});
 
+	User.hook('beforeUpdate', async user => {
+		if (user.password) {
+			user.password = await crypt.encodePassword(user.password);
+		}
+	});
+
 	User.checkPassword = async (plainPassword, encodedPassword) => {
 		return await crypt.checkPassword(plainPassword, encodedPassword);
 	};
