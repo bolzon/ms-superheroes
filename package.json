@@ -7,7 +7,6 @@
     "start": "node index.js",
     "test": "mocha",
     "doc": "jsdoc -c jsdoc.json .",
-    "lint": "eslint . --ext .json --ext .js",
     "docker:install": "docker build -q -t mysql-superheroes -f scripts/db/Dockerfile .",
     "docker:start": "docker run -p 3306:3306 mysql-superheroes"
   },
@@ -17,7 +16,7 @@
   },
   "author": "Bolzon <blzn@mail.ru>",
   "license": "ISC",
-  "homepage": "https://github.com/bolzon/ms-superheroes#readme",
+  "homepage": "https://bolzon.github.io/ms-superheroes/",
   "dependencies": {
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
@@ -32,7 +31,9 @@
     "sequelize": "^4.38.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "jsdoc": "^3.5.5",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "node-fetch": "^2.2.0"
   }
 }
