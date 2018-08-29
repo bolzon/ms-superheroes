@@ -3,6 +3,13 @@
 
 ![Build Status](https://travis-ci.org/bolzon/ms-superheroes.svg?branch=master)
 
+| Module   |  Version  |
+|----------|:---------:|
+| NodeJS   | 8.11.4    |
+| NPM      | 5.6.0     |
+| MySQL    | 5.7       |
+| Docker   | 17.03.2   |
+
 NodeJS application to make simple CRUD operations for a catalogue of Super Heroes.
 
 ## Install, test, run

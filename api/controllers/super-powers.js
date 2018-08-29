@@ -1,4 +1,5 @@
 
+const { Op } = require('sequelize');
 const HttpStatus = require('../lib/helpers/http').status;
 
 module.exports = app => {
@@ -45,12 +46,61 @@ module.exports = app => {
 			}
 		}
 
+		/**
+		 * Creates a new super power.
+		 * @param {Object} req.body  Super power object.
+		 */
 		static async create(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const superPower = req.body;
+			try {
+				const name = superPower['name'] || '';
+				if (name && await SuperPowersController.isNameTaken(name)) {
+					return res.sendError(HttpStatus.UnprocessableEntity, 'Super Power name is already taken');
+				}
+
+				let dbSuperPower = await SuperPower.create(superPower, {
+					fields: [ 'name', 'description' ]
+				});
+
+				res.json(dbSuperPower);
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
+		/**
+		 * Updates an existing super power.
+		 * @param {Number} req.params.id Super power id.
+		 * @param {Object} req.body Super power object.
+		 */
 		static async update(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const superPower = req.body;
+			const { id } = req.params;
+			try {
+				let dbSuperPower = await SuperPower.findOne({ where: { id } });
+				if (!dbSuperPower) {
+					return res.sendNotFound();
+				}
+
+				const name = superPower['name'] || '';
+				if (name && await SuperPowersController.isNameTaken(name, id)) {
+					return res.sendError(HttpStatus.UnprocessableEntity, 'Super Power name is already taken');
+				}
+
+				await SuperPower.update(superPower, {
+					where: { id },
+					fields: [ 'name', 'description' ]
+				});
+
+				dbSuperPower = await SuperPower.findOne({ where: { id } });
+				res.json(dbSuperPower);
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
 		/**
@@ -75,6 +125,26 @@ module.exports = app => {
 				console.error(ex);
 				res.sendUnexpectedError();
 			}
+		}
+
+		/**
+		 * Checks whether a super power name is already taken.
+		 * @param {String} superPowerName Super Power name.
+		 * @param {Number} id [Optional] Super Power id (when it's given, method
+		 * also checks super power is different from that id).
+		 * @returns {Boolean} `true` if so, `false` otherwise.
+		 */
+		static async isNameTaken(superPowerName, id) {
+			const whereClause = {
+				name: superPowerName
+			};
+			if (id) {
+				whereClause.id = {
+					[ Op.ne ]: id
+				}
+			}
+			const count = await SuperPower.count({ where: whereClause });
+			return count > 0;
 		}
 	}
 

@@ -96,7 +96,7 @@ module.exports = app => {
 				}
 
 				await User.update(user, {
-					where: { username: username },
+					where: { username },
 					fields: [ 'name', 'password', 'roleId' ]
 				});
 

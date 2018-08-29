@@ -1,4 +1,5 @@
 
+const { Op }  = require('sequelize');
 const HttpStatus = require('../lib/helpers/http').status;
 
 module.exports = app => {
@@ -47,12 +48,61 @@ module.exports = app => {
 			}
 		}
 
+		/**
+		 * Creates a new super hero.
+		 * @param {Object} req.body Super hero object.
+		 */
 		static async create(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const superHero = req.body;
+			try {
+				const name = superHero['name'] || '';
+				if (name && await SuperHeroesController.isNameTaken(name)) {
+					return res.sendError(HttpStatus.UnprocessableEntity, 'Super Hero name is already taken');
+				}
+
+				let dbSuperHero = await SuperHero.create(superHero, {
+					fields: [ 'name', 'alias' ]
+				});
+
+				res.json(dbSuperHero);
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
+		/**
+		 * Updates an existing super hero.
+		 * @param {Number} req.params.id Super hero id.
+		 * @param {Object} req.body Super hero object.
+		 */
 		static async update(req, res) {
-			res.status(HttpStatus.NotImplemented).end();
+			const superHero = req.body;
+			const { id } = req.params;
+			try {
+				let dbSuperHero = await SuperHero.findOne({ where: { id } });
+				if (!dbSuperHero) {
+					return res.sendNotFound();
+				}
+
+				const name = superHero['name'] || '';
+				if (name && await SuperHeroesController.isNameTaken(name, id)) {
+					return res.sendError(HttpStatus.UnprocessableEntity, 'Super Hero name is already taken');
+				}
+
+				await SuperHero.update(superHero, {
+					where: { id },
+					fields: [ 'name', 'alias' ]
+				});
+
+				dbSuperHero = await SuperHero.findOne({ where: { id } });
+				res.json(dbSuperHero);
+			}
+			catch (ex) {
+				console.error(ex);
+				res.sendUnexpectedError();
+			}
 		}
 
 		/**
@@ -73,6 +123,26 @@ module.exports = app => {
 				console.error(ex);
 				res.sendUnexpectedError();
 			}
+		}
+
+		/**
+		 * Checks whether a super hero name is already taken.
+		 * @param {String} superHeroName Super Hero name.
+		 * @param {Number} id [Optional] Super Hero id (when it's given, method
+		 * also checks super hero is different from that id).
+		 * @returns {Boolean} `true` if so, `false` otherwise.
+		 */
+		static async isNameTaken(superHeroName, id) {
+			const whereClause = {
+				name: superHeroName
+			};
+			if (id) {
+				whereClause.id = {
+					[ Op.ne ]: id
+				}
+			}
+			const count = await SuperHero.count({ where: whereClause });
+			return count > 0;
 		}
 	}
 
