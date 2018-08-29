@@ -3,6 +3,12 @@
 
 ![Build Status](https://travis-ci.org/bolzon/ms-superheroes.svg?branch=master)
 
+NodeJS application to make simple CRUD operations for a catalogue of Super Heroes.
+
+## Install, test, run
+
+First of all, you need to install modules listed in following table:
+
 | Module   |  Version  |
 |----------|:---------:|
 | NodeJS   | 8.11.4    |
@@ -10,13 +16,12 @@
 | MySQL    | 5.7       |
 | Docker   | 17.03.2   |
 
-NodeJS application to make simple CRUD operations for a catalogue of Super Heroes.
-
-## Install, test, run
-
-These are the commands to install, test and run project:
+Run these are the commands from project root folder to install, test and run application:
 
 ```bash
+npm docker:install
+npm docker:start
+
 npm install
 npm test
 npm start

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha",
     "doc": "jsdoc -c jsdoc.json .",
-    "lint": "eslint . --ext .json --ext .js"
+    "lint": "eslint . --ext .json --ext .js",
+    "docker:install": "docker build -q -t mysql-superheroes -f scripts/db/Dockerfile .",
+    "docker:start": "docker run -p 3306:3306 mysql-superheroes"
   },
   "repository": {
     "type": "git",
