@@ -1,6 +1,6 @@
 
-const server = require('../server');
+global.server = require('../server');
 
 before(() => {
-	return server.start();
+	return global.server.start();
 });
