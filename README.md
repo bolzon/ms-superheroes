@@ -19,8 +19,12 @@ First of all, you need to install modules listed in following table:
 These are the commands to install, test and run project:
 
 ```bash
+# mysql will run in a container
+
 npm docker:install
 npm docker:start
+
+# app will run locally
 
 npm install
 npm test
@@ -92,6 +96,5 @@ Standard users are able just to:
 
 # Author
 
-**Alexandre Bolzon**<br/>
-[about.me/bolzon](https://about.me/bolzon)<br/>
+[Alexandre Bolzon](https://about.me/bolzon)<br/>
 August, 2018
