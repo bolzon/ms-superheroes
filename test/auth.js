@@ -6,7 +6,6 @@ const server = require('../server');
 describe.only('Auth', () => {
 
 	before(() => server.start());
-	after(() => server.stop());
 
 	describe('Authentication', () => {
 		it('should authenticate registered user', async () => {

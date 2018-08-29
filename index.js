@@ -1,2 +1,2 @@
 
-require('./server').start().then(() => console.log('  Listening...'));
+require('./server').start();
