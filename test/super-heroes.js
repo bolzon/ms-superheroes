@@ -1,29 +1,25 @@
 
-const assert = require('assert');
+const { expect } = require('chai');
+const helpers = require('./helpers');
+
+const HttpHelper = helpers.HttpHelper;
+const HttpStatus = HttpHelper.Status;
 
 describe('SuperHeroes', () => {
 
-	describe('View all', () => {
-		it('should view all entities, paginating them correctly', async done => {
-			done();
-		});
+	it('should view all entities, paginating them correctly', async done => {
+		done();
 	});
 
-	describe('Create', () => {
-		it('should create a new entity', async done => {
-			done();
-		});
+	it('should create a new entity', async done => {
+		done();
 	});
 
-	describe('Delete', () => {
-		it('should delete an existing entity', async done => {
-			done();
-		});
+	it('should delete an existing entity', async done => {
+		done();
 	});
 
-	describe('Update', () => {
-		it('should update an existing entity', async done => {
-			done();
-		});
+	it('should update an existing entity', async done => {
+		done();
 	});
 });
