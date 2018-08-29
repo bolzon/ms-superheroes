@@ -3,6 +3,8 @@ language: node_js
 nodejs:
   - "8"
   - "10"
+services:
+  - docker
 before_script:
   - npm run docker:install
   - npm run docker:start
