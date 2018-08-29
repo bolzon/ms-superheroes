@@ -11,3 +11,5 @@ consign({ verbose: false, cwd: 'api' })
 	.then('routes')
 	.then('init.js')
 	.into(app);
+
+module.exports = app;

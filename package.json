@@ -2,8 +2,9 @@
   "name": "ms-superheroes",
   "version": "1.0.0",
   "description": "Super Heroes catalogue microservice",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "mocha",
     "doc": "jsdoc -c jsdoc.json .",
     "lint": "eslint . --ext .json --ext .js",

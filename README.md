@@ -16,7 +16,7 @@ First of all, you need to install modules listed in following table:
 | MySQL    | 5.7       |
 | Docker   | 17.03.2   |
 
-Run these are the commands from project root folder to install, test and run application:
+These are the commands to install, test and run project:
 
 ```bash
 npm docker:install
