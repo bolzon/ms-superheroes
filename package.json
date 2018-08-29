@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha",
+    "test": "mocha --exit",
     "doc": "jsdoc -c jsdoc.json .",
     "docker:install": "docker build -q -t mysql-superheroes -f scripts/db/Dockerfile .",
     "docker:start": "docker run -p 3306:3306 mysql-superheroes"

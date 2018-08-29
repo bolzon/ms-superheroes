@@ -12,7 +12,7 @@ module.exports = app => {
 					reject(err);
 				}
 				else {
-					console.log(`Server up on port ${app.config.port}.`);
+					//console.log(`  Server up on port ${app.config.port}`);
 					resolve();
 				}
 			});
@@ -20,7 +20,7 @@ module.exports = app => {
 	});
 
 	app.stop = () => new Promise(resolve => {
-		console.log('Server stopped');
+		//console.log('  Server stopped');
 		resolve();
 	});
 };
