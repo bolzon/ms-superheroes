@@ -27,8 +27,32 @@ module.exports = app => {
 	});
 
 	Object.keys(db.models).forEach(key => {
-		if (db.models[key].hasOwnProperty('associate')) {
-			db.models[key].associate(db.models);
+		const model = db.models[key];
+		if (!/audit/i.test(key)) {
+			((entityName, pk) => {
+				
+				const hooks = [
+					'afterFind',
+					'afterCreate',
+					'afterUpdate',
+					'afterDelete'
+				];
+
+				pk = Array.isArray(pk) ? pk[0] : pk;
+
+				hooks.forEach(hook => {
+					model.hook(hook, async (result, opts) => {
+						if (opts.hasOwnProperty('audit')) {
+							const action = hook.replace(/after/i, '').toUpperCase();
+							opts.audit.log(entityName, Array.isArray(result) ? '<array>' : result[pk], action);
+						}
+					});
+				});
+
+			})(key, model.primaryKeyAttributes);
+		}
+		if (model.hasOwnProperty('associate')) {
+			model.associate(db.models);
 		}
 	});
 

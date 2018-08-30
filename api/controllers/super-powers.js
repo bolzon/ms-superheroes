@@ -20,7 +20,8 @@ module.exports = app => {
 				const results = await SuperPower.findAndCountAll({
 					order: [ 'name' ],
 					offset,
-					limit
+					limit,
+					audit: req.audit
 				});
 				res.setTotalCount(results.count).json(results.rows);
 			}
@@ -37,7 +38,10 @@ module.exports = app => {
 		static async getSingle(req, res) {
 			const { id } = req.params;
 			try {
-				const superPower = await SuperPower.findOne({ where: { id } });
+				const superPower = await SuperPower.findOne({
+					where: { id },
+					audit: req.audit
+				});
 				superPower ? res.json(superPower) : res.sendNotFound();
 			}
 			catch (ex) {
@@ -59,7 +63,8 @@ module.exports = app => {
 				}
 
 				let dbSuperPower = await SuperPower.create(superPower, {
-					fields: [ 'name', 'description' ]
+					fields: [ 'name', 'description' ],
+					audit: req.audit
 				});
 
 				res.json(dbSuperPower);
@@ -91,7 +96,8 @@ module.exports = app => {
 
 				await SuperPower.update(superPower, {
 					where: { id },
-					fields: [ 'name', 'description' ]
+					fields: [ 'name', 'description' ],
+					audit: req.audit
 				});
 
 				dbSuperPower = await SuperPower.findOne({ where: { id } });
@@ -116,7 +122,7 @@ module.exports = app => {
 			try {
 				let superPower = await SuperPower.findOne({ where: { id } });
 				if (superPower) {
-					await superPower.destroy();
+					await superPower.destroy({ audit: req.audit });
 					return res.ok();
 				}
 				res.sendNotFound();

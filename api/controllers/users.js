@@ -22,7 +22,8 @@ module.exports = app => {
 						exclude: [ 'password' ]
 					},
 					offset,
-					limit
+					limit,
+					audit: req.audit
 				});
 				res.setTotalCount(results.count).json(results.rows);
 			}
@@ -43,7 +44,8 @@ module.exports = app => {
 					where: { username },
 					attributes: {
 						exclude: [ 'password' ]
-					}
+					},
+					audit: req.audit
 				});
 
 				user ? res.json(user) : res.sendNotFound();
@@ -67,7 +69,8 @@ module.exports = app => {
 				}
 
 				dbUser = await User.create(user, {
-					fields: [ 'username', 'name', 'password', 'roleId' ]
+					fields: [ 'username', 'name', 'password', 'roleId' ],
+					audit: req.audit
 				});
 
 				dbUser = dbUser.toJSON();
@@ -97,7 +100,8 @@ module.exports = app => {
 
 				await User.update(user, {
 					where: { username },
-					fields: [ 'name', 'password', 'roleId' ]
+					fields: [ 'name', 'password', 'roleId' ],
+					audit: req.audit
 				});
 
 				dbUser = await User.findOne({ where: { username } });
@@ -121,7 +125,7 @@ module.exports = app => {
 			try {
 				let user = await User.findOne({ where: { username } });
 				if (user) {
-					await user.destroy();
+					await user.destroy({ audit: req.audit });
 					return res.ok();
 				}
 				res.sendNotFound();

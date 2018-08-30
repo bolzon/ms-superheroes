@@ -2,6 +2,7 @@
 const fs = require('fs');
 const passport = require('passport');
 const { Strategy, ExtractJwt } = require('passport-jwt');
+const AuditService = require('./lib/services/audit');
 
 module.exports = app => {
 
@@ -23,19 +24,35 @@ module.exports = app => {
 					exclude: [ 'password' ]
 				}
 			});
-			done(null, user);
+			done(null, user.toJSON());
 		}
 		catch (ex) {
 			done(ex);
 		}
 	}));
 
+	passport.serializeUser((user, done) => {
+		done(null, user);
+	});
+
+	passport.deserializeUser((user, done) => {
+		done(null, user);
+	});
+
 	const auth = {
 		initialize: () => {
 			return passport.initialize();
 		},
-		authenticate: () => {
-			return passport.authenticate('jwt', app.config.auth.jwtSession);
+		authenticate: () => (req, res, next) => {
+			passport.authenticate('jwt', app.config.auth.jwtSession, (err, user, info) => {
+				if (err) { return next(err); }
+				if (!user) { return res.sendUnauthorized(); }
+				req.login(user, errLogin => {
+					if (errLogin) { return next(errLogin); }
+					req.audit = new AuditService(req.user.username);
+					next();
+				});
+			})(req, res, next);
 		}
 	};
 

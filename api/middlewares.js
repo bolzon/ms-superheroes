@@ -68,6 +68,9 @@ module.exports = app => {
 		res.sendNotFound = () =>
 			res.sendError(HttpStatus.NotFound, 'Entity or resource not found');
 
+		res.sendUnauthorized = () =>
+			res.sendError(HttpStatus.Unauthorized, 'Unauthorized');
+
 		res.sendForbidden = () =>
 			res.sendError(HttpStatus.Forbidden, 'Unauthorized');
 

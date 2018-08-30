@@ -20,8 +20,7 @@ module.exports = (sequelize, DataType) => {
 			allowNull: false
 		},
 		action: {
-			type: DataType.STRING,
-			
+			type: DataType.STRING
 		}
 	}, { timestamps: false });
 
