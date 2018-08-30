@@ -12,7 +12,7 @@ module.exports = (sequelize, DataType) => {
 			allowNull: false
 		},
 		entityId: {
-			type: DataType.INTEGER.UNSIGNED,
+			type: DataType.STRING,
 			allowNull: false
 		},
 		datetime: {

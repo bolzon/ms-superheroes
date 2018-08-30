@@ -31,13 +31,8 @@ module.exports = app => {
 		}
 	}));
 
-	passport.serializeUser((user, done) => {
-		done(null, user);
-	});
-
-	passport.deserializeUser((user, done) => {
-		done(null, user);
-	});
+	passport.serializeUser((user, done) => done(null, user));
+	passport.deserializeUser((user, done) => done(null, user));
 
 	const auth = {
 		initialize: () => {
@@ -49,7 +44,9 @@ module.exports = app => {
 				if (!user) { return res.sendUnauthorized(); }
 				req.login(user, errLogin => {
 					if (errLogin) { return next(errLogin); }
-					req.audit = new AuditService(req.user.username);
+					// injects audit service in request object
+					const auditModel = req.app.db.models.AuditEvent;
+					req.audit = new AuditService(auditModel, req.user.username);
 					next();
 				});
 			})(req, res, next);

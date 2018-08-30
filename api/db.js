@@ -30,19 +30,18 @@ module.exports = app => {
 		const model = db.models[key];
 		if (!/audit/i.test(key)) {
 			((entityName, pk) => {
-				
+
 				const hooks = [
-					'afterFind',
-					'afterCreate',
-					'afterUpdate',
-					'afterDelete'
+					'Create',
+					'Update',
+					'Delete'
 				];
 
 				pk = Array.isArray(pk) ? pk[0] : pk;
 
 				hooks.forEach(hook => {
-					model.hook(hook, async (result, opts) => {
-						if (opts.hasOwnProperty('audit')) {
+					model.hook(`after${hook}`, async (result, opts) => {
+						if (opts && opts.hasOwnProperty('audit')) {
 							const action = hook.replace(/(before|after)/i, '').toUpperCase();
 							opts.audit.log(entityName, Array.isArray(result) ? '<array>' : result[pk], action);
 						}
