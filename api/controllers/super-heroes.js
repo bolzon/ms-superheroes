@@ -6,6 +6,7 @@ module.exports = app => {
 
 	const SuperHero = app.db.models.SuperHero;
 	const SuperPower = app.db.models.SuperPower;
+	const ProtectionArea = app.db.models.ProtectionArea;
 
 	/** Super Heroes controller class. */
 	class SuperHeroesController {
@@ -20,7 +21,7 @@ module.exports = app => {
 			try {
 				const results = await SuperHero.findAndCountAll({
 					order: [ 'name' ],
-					include: [{ model: SuperPower }],
+					include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ],
 					offset,
 					limit
 				});
@@ -39,7 +40,10 @@ module.exports = app => {
 		static async getSingle(req, res) {
 			const { id } = req.params;
 			try {
-				const superHero = await SuperHero.findOne({ where: { id } });
+				const superHero = await SuperHero.findOne({
+					where: { id },
+					include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ]
+				});
 				superHero ? res.json(superHero) : res.sendNotFound();
 			}
 			catch (ex) {
@@ -61,7 +65,8 @@ module.exports = app => {
 				}
 
 				let dbSuperHero = await SuperHero.create(superHero, {
-					fields: [ 'name', 'alias' ]
+					fields: [ 'name', 'alias', 'protectionAreaId', 'superPowers' ],
+					include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ]
 				});
 
 				res.json(dbSuperHero);
@@ -81,7 +86,11 @@ module.exports = app => {
 			const superHero = req.body;
 			const { id } = req.params;
 			try {
-				let dbSuperHero = await SuperHero.findOne({ where: { id } });
+				let dbSuperHero = await SuperHero.findOne({
+					where: { id },
+					include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ]
+				});
+
 				if (!dbSuperHero) {
 					return res.sendNotFound();
 				}
@@ -91,12 +100,20 @@ module.exports = app => {
 					return res.sendError(HttpStatus.UnprocessableEntity, 'Super Hero name is already taken');
 				}
 
-				await SuperHero.update(superHero, {
+				const fields = [ 'name', 'alias', 'protectionAreaId' ];
+				if (fields.some(f => Object.keys(superHero).includes(f))) {
+					await SuperHero.update(superHero, { where: { id }, fields });
+				}
+
+				if (superHero.superPowers) {
+					await dbSuperHero.setSuperPowers(superHero.superPowers);
+				}
+
+				dbSuperHero = await SuperHero.findOne({
 					where: { id },
-					fields: [ 'name', 'alias' ]
+					include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ]
 				});
 
-				dbSuperHero = await SuperHero.findOne({ where: { id } });
 				res.json(dbSuperHero);
 			}
 			catch (ex) {

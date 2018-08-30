@@ -19,7 +19,7 @@ module.exports = (sequelize, DataType) => {
 
 	SuperPower.associate = models => {
 		SuperPower.belongsToMany(models.SuperHero, {
-			through: 'SuperHeroesPowers',
+			through: models.SuperHeroesPowers,
 			foreignKey: {
 				name: 'superPowerId',
 				allowNull: false
