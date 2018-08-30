@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --exit",
+    "test": "./node_modules/mocha/bin/mocha --exit",
     "doc": "jsdoc -c jsdoc.json .",
     "docker:install": "docker build -q -t mysql-superheroes -f scripts/db/Dockerfile .",
     "docker:start": "docker run -d -p 4441:3306 mysql-superheroes"
@@ -20,21 +20,21 @@
   "dependencies": {
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
-    "chai": "^4.1.2",
     "compression": "^1.7.3",
     "consign": "^0.1.6",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "mysql2": "^1.6.1",
-    "mocha": "^5.2.0",
-    "node-fetch": "^2.2.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "sequelize": "^4.38.0",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
-    "jsdoc": "^3.5.5"
+    "chai": "^4.1.2",
+    "jsdoc": "^3.5.5",
+    "mocha": "^5.2.0",
+    "node-fetch": "^2.2.0"
   }
 }
