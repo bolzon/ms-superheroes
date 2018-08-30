@@ -43,7 +43,7 @@ module.exports = app => {
 				hooks.forEach(hook => {
 					model.hook(hook, async (result, opts) => {
 						if (opts.hasOwnProperty('audit')) {
-							const action = hook.replace(/after/i, '').toUpperCase();
+							const action = hook.replace(/(before|after)/i, '').toUpperCase();
 							opts.audit.log(entityName, Array.isArray(result) ? '<array>' : result[pk], action);
 						}
 					});
