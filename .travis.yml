@@ -5,7 +5,7 @@ nodejs:
 sudo: required
 services:
   - docker
-before_install:
+install:
   - npm run docker:install
   - npm run docker:start
 cache:
