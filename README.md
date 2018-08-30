@@ -222,16 +222,16 @@ Every action executed by a user will be mapped by an Audit Service.
 This service is injected in database hooks and for each action, an audit event is dispatched to be registered in database and includes:
 
 - entity name
-- entity ID (or `"<array>"` if a list is returned)
+- entity ID (or string `"<array>"` if a list is returned)
 - action (`CREATE`, `UPDATE` or `DELETE`)
 - username that triggered the action
 - timestamp of the action
 
-It's also possible clients to connect to server via [socket.io](https://socket.io/docs/) to listen for audit events as `auditEvent`.
+It's also possible clients to connect to server via [socket.io](https://socket.io/docs/) to listen for audit events in `auditEvent` channel.
 
-All connected clients should receive each audit events.
+All connected clients should receive the events.
 
 # Author
 
-[Alexandre Bolzon](https://about.me/bolzon)<br/>
-August, 2018
+August, 2018<br/>
+[Alexandre Bolzon](https://about.me/bolzon)

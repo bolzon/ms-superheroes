@@ -10,6 +10,7 @@ before_install:
 install:
   - npm run docker:install
   - npm run docker:start
+  - npm install -g mocha
 cache:
   directories:
     - "node_modules"
