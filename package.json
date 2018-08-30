@@ -8,7 +8,7 @@
     "test": "mocha -S",
     "doc": "jsdoc -c jsdoc.json .",
     "docker:install": "docker build -q -t mysql-superheroes -f scripts/db/Dockerfile .",
-    "docker:start": "docker run -d -p 4441:3306 mysql-superheroes"
+    "docker:start": "docker run -i -d -p 4441:3306 mysql-superheroes"
   },
   "repository": {
     "type": "git",
