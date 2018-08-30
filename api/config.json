@@ -16,8 +16,8 @@
 		"username": "superuser",
 		"password": "superpass",
 		"params": {
-			"host": "localhost",
 			"port": 4441,
+			"host": "127.0.0.1",
 			"dialect": "mysql",
 			"logging": false,
 			"operatorsAliases": false,
