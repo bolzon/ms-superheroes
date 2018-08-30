@@ -1,5 +1,5 @@
 {
-	"port": 3000,
+	"port": 4440,
 	"defaultItemsPerPage": 10,
 	"auth": {
 		"saltRounds": 10,
@@ -17,6 +17,7 @@
 		"password": "superpass",
 		"params": {
 			"host": "localhost",
+			"port": 4441,
 			"dialect": "mysql",
 			"logging": false,
 			"operatorsAliases": false,
