@@ -7,8 +7,9 @@ module.exports = app => {
 
 	app.start = () => new Promise((resolve, reject) => {
 		app.db.sequelize.sync().done(async () => {
-			await app.listen(app.config.port || 3000, err => {
-				err ? reject(err) : resolve();
+			const server = app.listen(app.config.port || 3000, async err => {
+				if (err) return reject(err);
+				app.push.start(server).then(resolve).catch(reject); // starts push service
 			});
 		});
 	});

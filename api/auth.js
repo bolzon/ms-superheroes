@@ -46,7 +46,7 @@ module.exports = app => {
 					if (errLogin) { return next(errLogin); }
 					// injects audit service in request object
 					const auditModel = req.app.db.models.AuditEvent;
-					req.audit = new AuditService(auditModel, req.user.username);
+					req.audit = new AuditService(auditModel, req.user.username, req.app.push);
 					next();
 				});
 			})(req, res, next);

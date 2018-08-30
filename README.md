@@ -227,6 +227,7 @@ This service is injected in database hooks and for each action, an audit event i
 - username that triggered the action
 - timestamp of the action
 
+It's also possible clients to connect to server via [socket.io](https://socket.io/docs/) to listen for audit events.
 
 # Author
 

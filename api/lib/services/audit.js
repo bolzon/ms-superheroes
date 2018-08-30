@@ -2,9 +2,10 @@
 /** Audit service class. */
 class AuditService {
 
-	constructor(auditModel, username) {
+	constructor(auditModel, username, pushService) {
 		this.auditModel = auditModel;
 		this.username = username;
+		this.pushService = pushService;
 	}
 
 	async log(entity, entityId, action) {
@@ -17,7 +18,8 @@ class AuditService {
 			username: this.username
 		};
 
-		this.auditModel.create(auditEvent);
+		await this.auditModel.create(auditEvent);
+		await pushService.emit(auditEvent);
 	}
 }
 
