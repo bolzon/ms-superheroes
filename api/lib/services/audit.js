@@ -19,7 +19,7 @@ class AuditService {
 		};
 
 		await this.auditModel.create(auditEvent);
-		await pushService.emit(auditEvent);
+		await this.pushService.emit(auditEvent);
 	}
 }
 
