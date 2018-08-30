@@ -5,6 +5,8 @@ nodejs:
 sudo: required
 services:
   - docker
+before_install:
+  - sudo /etc/init.d/mysql stop
 install:
   - npm run docker:install
   - npm run docker:start
