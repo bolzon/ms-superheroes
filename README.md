@@ -141,7 +141,7 @@ Body:
 
 `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }`
 
-##### `POST /users/{username}`
+##### `DELETE /users/{username}`
 
 Deletes an existing user.
 
@@ -222,10 +222,10 @@ Every action executed by a user will be mapped by an Audit Service.
 This service is injected in database hooks and for each action, an audit event is dispatched to be registered in database and includes:
 
 - entity name
-- entity id (or &lt;array&gt; if a list is returned)
-- action (**C**reate, **U**pdate or **D**elete)
+- entity ID (or `"&lt;array&gt;"` if a list is returned)
+- action (`CREATE`, `UPDATE` or `DELETE`)
 - username that triggered the action
-- timestamp of when the action occured
+- timestamp of the action
 
 
 # Author
