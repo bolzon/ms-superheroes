@@ -222,7 +222,7 @@ Every action executed by a user will be mapped by an Audit Service.
 This service is injected in database hooks and for each action, an audit event is dispatched to be registered in database and includes:
 
 - entity name
-- entity ID (or `"&lt;array&gt;"` if a list is returned)
+- entity ID (or `"<array>"` if a list is returned)
 - action (`CREATE`, `UPDATE` or `DELETE`)
 - username that triggered the action
 - timestamp of the action
