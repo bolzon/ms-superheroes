@@ -10,7 +10,9 @@ before_install:
 install:
   - npm run docker:install
   - npm run docker:start
-  - npm install -g mocha
+  - npm install -g chai@4.1.x
+  - npm install -g mocha@5.2.x
+  - npm install -g node-fetch@2.2.x
 cache:
   directories:
     - "node_modules"
