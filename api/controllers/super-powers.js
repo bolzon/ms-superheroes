@@ -16,19 +16,13 @@ module.exports = app => {
 		 */
 		static async getAll(req, res) {
 			const { offset, limit } = req.query;
-			try {
-				const results = await SuperPower.findAndCountAll({
-					order: [ 'name' ],
-					offset,
-					limit,
-					audit: req.audit
-				});
-				res.setTotalCount(results.count).json(results.rows);
-			}
-			catch (ex) {
-				app.logger.error(ex);
-				res.sendUnexpectedError();
-			}
+			const results = await SuperPower.findAndCountAll({
+				order: [ 'name' ],
+				offset,
+				limit,
+				audit: req.audit
+			});
+			res.setTotalCount(results.count).json(results.rows);
 		}
 
 		/**
@@ -37,17 +31,11 @@ module.exports = app => {
 		 */
 		static async getSingle(req, res) {
 			const { id } = req.params;
-			try {
-				const superPower = await SuperPower.findOne({
-					where: { id },
-					audit: req.audit
-				});
-				superPower ? res.json(superPower) : res.sendNotFound();
-			}
-			catch (ex) {
-				app.logger.error(ex);
-				res.sendUnexpectedError();
-			}
+			const superPower = await SuperPower.findOne({
+				where: { id },
+				audit: req.audit
+			});
+			superPower ? res.json(superPower) : res.sendNotFound();
 		}
 
 		/**
@@ -115,22 +103,12 @@ module.exports = app => {
 		 */
 		static async delete(req, res) {
 			const { id } = req.params;
-			if (!id) {
-				return res.sendBadRequest('Missing "id"');
+			let superPower = await SuperPower.findOne({ where: { id } });
+			if (superPower) {
+				await superPower.destroy({ audit: req.audit });
+				return res.ok();
 			}
-
-			try {
-				let superPower = await SuperPower.findOne({ where: { id } });
-				if (superPower) {
-					await superPower.destroy({ audit: req.audit });
-					return res.ok();
-				}
-				res.sendNotFound();
-			}
-			catch (ex) {
-				app.logger.error(ex);
-				res.sendUnexpectedError();
-			}
+			res.sendNotFound();
 		}
 
 		/**
@@ -149,8 +127,7 @@ module.exports = app => {
 					[ Op.ne ]: id
 				}
 			}
-			const count = await SuperPower.count({ where: whereClause });
-			return count > 0;
+			return await SuperPower.count({ where: whereClause }) > 0;
 		}
 	}
 

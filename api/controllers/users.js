@@ -40,7 +40,6 @@ module.exports = app => {
 				},
 				audit: req.audit
 			});
-
 			user ? res.json(user) : res.sendNotFound();
 		}
 

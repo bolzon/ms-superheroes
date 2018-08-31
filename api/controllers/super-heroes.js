@@ -18,19 +18,13 @@ module.exports = app => {
 		 */
 		static async getAll(req, res) {
 			const { offset, limit } = req.query;
-			try {
-				const results = await SuperHero.findAndCountAll({
-					order: [ 'name' ],
-					include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ],
-					offset,
-					limit
-				});
-				res.setTotalCount(results.count).json(results.rows);
-			}
-			catch (ex) {
-				app.logger.error(ex);
-				res.sendUnexpectedError();
-			}
+			const results = await SuperHero.findAndCountAll({
+				order: [ 'name' ],
+				include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ],
+				offset,
+				limit
+			});
+			res.setTotalCount(results.count).json(results.rows);
 		}
 
 		/**
@@ -39,17 +33,11 @@ module.exports = app => {
 		 */
 		static async getSingle(req, res) {
 			const { id } = req.params;
-			try {
-				const superHero = await SuperHero.findOne({
-					where: { id },
-					include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ]
-				});
-				superHero ? res.json(superHero) : res.sendNotFound();
-			}
-			catch (ex) {
-				app.logger.error(ex);
-				res.sendUnexpectedError();
-			}
+			const superHero = await SuperHero.findOne({
+				where: { id },
+				include: [ { model: SuperPower, as: 'superPowers' }, ProtectionArea ]
+			});
+			superHero ? res.json(superHero) : res.sendNotFound();
 		}
 
 		/**
@@ -130,7 +118,7 @@ module.exports = app => {
 			const { id } = req.params;
 			let superHero = await SuperHero.findOne({ where: { id } });
 			if (superHero) {
-				await superHero.destroy();
+				await superHero.destroy({ audit: req.audit });
 				return res.ok();
 			}
 			res.sendNotFound();
