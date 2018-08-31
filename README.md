@@ -6,7 +6,7 @@ NodeJS application to make simple CRUD operations for a catalogue of Super Heroe
 
 ## Install, test, run
 
-First of all, you need to install modules listed in following table:
+First of all, install modules listed in following table:
 
 | Module   |  Version  |
 |----------|:---------:|
@@ -15,18 +15,29 @@ First of all, you need to install modules listed in following table:
 | MySQL    | 5.7       |
 | Docker   | 17.03.2   |
 
-These are the commands to install, test and run project:
+
+Then install and start MySQL docker instance.
 
 ```bash
-# mysql will run in a container
-
 npm docker:install
 npm docker:start
+```
 
-# app will run locally
+Now install project dependencies.
 
+```bash
 npm install
+```
+
+And run tests to get test results and code coverage.
+
+```bash
 npm test
+```
+
+To start the app locally:
+
+```bash
 npm start
 ```
 
