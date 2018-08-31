@@ -15,22 +15,16 @@ module.exports = app => {
 		 */
 		static async getAll(req, res) {
 			const { offset, limit } = req.query;
-			try {
-				const results = await User.findAndCountAll({
-					order: [ 'name' ],
-					attributes: {
-						exclude: [ 'password' ]
-					},
-					offset,
-					limit,
-					audit: req.audit
-				});
-				res.setTotalCount(results.count).json(results.rows);
-			}
-			catch (ex) {
-				console.error(ex);
-				res.sendUnexpectedError();
-			}
+			const results = await User.findAndCountAll({
+				order: [ 'name' ],
+				attributes: {
+					exclude: [ 'password' ]
+				},
+				offset,
+				limit,
+				audit: req.audit
+			});
+			res.setTotalCount(results.count).json(results.rows);
 		}
 
 		/**
@@ -39,21 +33,15 @@ module.exports = app => {
 		 */
 		static async getSingle(req, res) {
 			const { username } = req.params;
-			try {
-				const user = await User.findOne({
-					where: { username },
-					attributes: {
-						exclude: [ 'password' ]
-					},
-					audit: req.audit
-				});
+			const user = await User.findOne({
+				where: { username },
+				attributes: {
+					exclude: [ 'password' ]
+				},
+				audit: req.audit
+			});
 
-				user ? res.json(user) : res.sendNotFound();
-			}
-			catch (ex) {
-				console.error(ex);
-				res.sendUnexpectedError();
-			}
+			user ? res.json(user) : res.sendNotFound();
 		}
 
 		/**
@@ -79,7 +67,7 @@ module.exports = app => {
 				res.json(dbUser);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -111,7 +99,7 @@ module.exports = app => {
 				res.json(dbUser);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -122,18 +110,12 @@ module.exports = app => {
 		 */
 		static async delete(req, res) {
 			const { username } = req.params;
-			try {
-				let user = await User.findOne({ where: { username } });
-				if (user) {
-					await user.destroy({ audit: req.audit });
-					return res.ok();
-				}
-				res.sendNotFound();
+			let user = await User.findOne({ where: { username } });
+			if (user) {
+				await user.destroy({ audit: req.audit });
+				return res.ok();
 			}
-			catch (ex) {
-				console.error(ex);
-				res.sendUnexpectedError();
-			}
+			res.sendNotFound();
 		}
 	}
 

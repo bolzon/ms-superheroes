@@ -51,10 +51,8 @@ module.exports = app => {
 	// auxiliar functions to return error messages
 	app.use((req, res, next) => {
 
-		res.setTotalCount = (count) => {
+		res.setTotalCount = count =>
 			res.header('X-Total-Count', count);
-			return res;
-		};
 
 		res.sendError = (status, message) =>
 			res.status(status).json({ message });
@@ -62,14 +60,11 @@ module.exports = app => {
 		res.sendUnexpectedError = () =>
 			res.sendError(HttpStatus.InternalServerError, 'Unexpected error');
 
-		res.sendBadRequest = (message) =>
+		res.sendBadRequest = message =>
 			res.sendError(HttpStatus.BadRequest, message || 'Missing resource or param');
 
 		res.sendNotFound = () =>
 			res.sendError(HttpStatus.NotFound, 'Entity or resource not found');
-
-		res.sendUnauthorized = () =>
-			res.sendError(HttpStatus.Unauthorized, 'Unauthorized');
 
 		res.sendForbidden = () =>
 			res.sendError(HttpStatus.Forbidden, 'Unauthorized');

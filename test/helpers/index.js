@@ -36,10 +36,10 @@ class HttpHelper {
 		return fetch(url, opts).then(async response => {
 			try {
 				const jsonResponse = await response.json();
-				return { status: response.status, body: jsonResponse };
+				return { status: response.status, headers: response.headers, body: jsonResponse };
 			}
 			catch (ex) {
-				return { status: response.status, body: {} };
+				return { status: response.status, headers: response.headers, body: {} };
 			}
 		});
 	}

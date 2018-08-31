@@ -9,13 +9,13 @@ module.exports = app => {
 	router.use(app.auth.authenticate());
 
 	router.get('/', superPowersCtrl.getAll);
-	router.get('/:id', superPowersCtrl.getSingle);
+	router.get('/:id(\\d+)', superPowersCtrl.getSingle);
 
 	router.use(authorization.forAdminRole());
 
 	router.post('/', superPowersCtrl.create);
-	router.put('/:id', superPowersCtrl.update);
-	router.delete('/:id', superPowersCtrl.delete);
+	router.put('/:id(\\d+)', superPowersCtrl.update);
+	router.delete('/:id(\\d+)', superPowersCtrl.delete);
 
 	app.use('/super-powers', router);
 	return router;

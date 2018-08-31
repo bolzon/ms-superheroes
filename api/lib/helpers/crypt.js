@@ -17,18 +17,7 @@ config.token.secret = fs.readFileSync(config.auth.keyPath);
  */
 module.exports.generateJWT = async payload => {
 	return await jwt.sign(payload, config.token.secret, {
-		expiresIn: config.token.expiresIn || '1d'
-	});
-};
-
-/**
- * Verifies whether a JWT is valid or not.
- * @param {String} token JWT token.
- * @return {Object} Decoded payload if token is valid or false value otherwise.
- */
-module.exports.verifyJWT = async token => {
-	return await jwt.verify(token, config.token.secret, {
-		expiresIn: config.token.expiresIn || '1d'
+		expiresIn: config.token.expiresIn
 	});
 };
 
@@ -39,7 +28,7 @@ module.exports.verifyJWT = async token => {
  */
 module.exports.encodePassword = async password => {
 	// more info at https://github.com/kelektiv/node.bcrypt.js#a-note-on-rounds
-	const salt = await bcrypt.genSalt(config.auth.saltRounds || 10);
+	const salt = await bcrypt.genSalt(config.auth.saltRounds);
 	return await bcrypt.hash(password, salt);
 };
 

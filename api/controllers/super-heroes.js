@@ -28,7 +28,7 @@ module.exports = app => {
 				res.setTotalCount(results.count).json(results.rows);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -47,7 +47,7 @@ module.exports = app => {
 				superHero ? res.json(superHero) : res.sendNotFound();
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -72,7 +72,7 @@ module.exports = app => {
 				res.json(dbSuperHero);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -117,7 +117,7 @@ module.exports = app => {
 				res.json(dbSuperHero);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -128,18 +128,12 @@ module.exports = app => {
 		 */
 		static async delete(req, res) {
 			const { id } = req.params;
-			try {
-				let superHero = await SuperHero.findOne({ where: { id } });
-				if (superHero) {
-					await superHero.destroy();
-					return res.ok();
-				}
-				res.sendNotFound();
+			let superHero = await SuperHero.findOne({ where: { id } });
+			if (superHero) {
+				await superHero.destroy();
+				return res.ok();
 			}
-			catch (ex) {
-				console.error(ex);
-				res.sendUnexpectedError();
-			}
+			res.sendNotFound();
 		}
 
 		/**
@@ -158,8 +152,7 @@ module.exports = app => {
 					[ Op.ne ]: id
 				}
 			}
-			const count = await SuperHero.count({ where: whereClause });
-			return count > 0;
+			return await SuperHero.count({ where: whereClause }) > 0;
 		}
 	}
 

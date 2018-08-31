@@ -26,7 +26,7 @@ module.exports = app => {
 				res.setTotalCount(results.count).json(results.rows);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -45,7 +45,7 @@ module.exports = app => {
 				superPower ? res.json(superPower) : res.sendNotFound();
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -70,7 +70,7 @@ module.exports = app => {
 				res.json(dbSuperPower);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -104,7 +104,7 @@ module.exports = app => {
 				res.json(dbSuperPower);
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}
@@ -128,7 +128,7 @@ module.exports = app => {
 				res.sendNotFound();
 			}
 			catch (ex) {
-				console.error(ex);
+				app.logger.error(ex);
 				res.sendUnexpectedError();
 			}
 		}

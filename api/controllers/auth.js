@@ -15,26 +15,19 @@ module.exports = app => {
 		 * @param {String} req.body.password User password to authenticate.
 		 */
 		static async token(req, res) {
-
-			try {
-				const { username, password } = req.body;
-				if (!username || !password) {
-					return res.sendBadRequest('Username and password are required');
-				}
-
-				const user = await User.findOne({ where: { username } });
-				if (user && await User.checkPassword(password, user.password)) {
-					let jsonUser = user.toJSON();
-					delete jsonUser.password;
-					res.json({ token: await crypt.generateJWT(jsonUser) });
-				}
-				else {
-					res.sendError(HttpStatus.Unauthorized, 'Invalid credentials');
-				}
+			const { username, password } = req.body;
+			if (!username || !password) {
+				return res.sendBadRequest('Username and password are required');
 			}
-			catch (ex) {
-				console.error(ex);
-				res.sendError(HttpStatus.InternalServerError, 'Unexpected error');
+
+			const user = await User.findOne({ where: { username } });
+			if (user && await User.checkPassword(password, user.password)) {
+				let jsonUser = user.toJSON();
+				delete jsonUser.password;
+				res.json({ token: await crypt.generateJWT(jsonUser) });
+			}
+			else {
+				res.sendError(HttpStatus.Unauthorized, 'Invalid credentials');
 			}
 		}
 	}
