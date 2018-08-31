@@ -6,9 +6,8 @@
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const config = JSON.parse(fs.readFileSync('./api/config.json'));
-config.token.secret = fs.readFileSync(config.auth.keyPath);
+const config = require('../../config.json');
+const pvtKey = fs.readFileSync(config.token.pvtKeyPath).toString();
 
 /**
  * Generates a JWT with the given payload.
@@ -16,8 +15,9 @@ config.token.secret = fs.readFileSync(config.auth.keyPath);
  * @returns {String} JWT in base64 format.
  */
 module.exports.generateJWT = async payload => {
-	return await jwt.sign(payload, config.token.secret, {
-		expiresIn: config.token.expiresIn
+	return await jwt.sign(payload, pvtKey, {
+		expiresIn: config.token.expiresIn,
+		algorithm: config.token.algorithm
 	});
 };
 
