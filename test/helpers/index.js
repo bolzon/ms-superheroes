@@ -1,12 +1,7 @@
-/**
- * Test helpers module has useful methods to help on tests.
- * @module test/helpers
- */
 
 const fetch = require('node-fetch');
 const config = require('../../api/config.json');
 
-/** HTTP helper class. */
 class HttpHelper {
 
 	static get(url, token) {
