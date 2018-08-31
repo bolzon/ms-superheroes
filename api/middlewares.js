@@ -56,6 +56,9 @@ module.exports = app => {
 
 		res.sendError = (status, message) =>
 			res.status(status).json({ message });
+ 
+		res.sendUnauthorized = () =>
+			res.sendError(HttpStatus.Unauthorized, 'Unauthorized');
 
 		res.sendUnexpectedError = () =>
 			res.sendError(HttpStatus.InternalServerError, 'Unexpected error');
