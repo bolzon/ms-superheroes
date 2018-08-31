@@ -3,13 +3,15 @@
 	"defaultItemsPerPage": 10,
 	"auth": {
 		"saltRounds": 10,
-		"keyPath": "./api/auth-secret.pem",
 		"jwtSession": {
 			"session": false
 		}
 	},
 	"token": {
-		"expiresIn": "1d"
+		"expiresIn": "1d",
+		"algorithm": "ES512",
+		"pvtKeyPath": "./api/auth-pvtkey.pem",
+		"pubKeyPath": "./api/auth-pubkey.pem"
 	},
 	"db": {
 		"database": "superheroes",
