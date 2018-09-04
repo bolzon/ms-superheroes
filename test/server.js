@@ -69,7 +69,7 @@ describe('Server', () => {
 			await HttpHelper.delete(`/users/${standardUser.username}`, adminToken);
 		});
 
-		describe('# admin users', async () => {
+		describe('Admin Role', async () => {
 
 			before(async () => {
 				// auth admin user
@@ -125,7 +125,7 @@ describe('Server', () => {
 			});
 		});
 
-		describe('# standard users', () => {
+		describe('Standard Role', () => {
 
 			it('authenticate', async () => {
 				let response = await HttpHelper.get('/', standardToken);

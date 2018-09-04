@@ -240,6 +240,10 @@ It's also possible clients to connect to server via [socket.io](https://socket.i
 
 All connected clients should receive the events.
 
+#### Test client
+
+A push client was created to test receiving audit event messages from this server and can be found on GitHub [ms-superheroes-testclient](https://github.com/bolzon/ms-superheroes-testclient) repo.
+
 # Author
 
 August, 2018<br/>
