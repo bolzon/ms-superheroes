@@ -118,8 +118,8 @@ Users are divided in two roles:
 | Auth   | `POST` | `/auth` | `{ username: '', password: '' }` | Authenticates a user by validating their username/password and gererating a new token in JWT format. |
 | Users | `GET`  | `/users` | | Gets the list of users. |
 | Users | `GET`  | `/users/{username}` | | Get a single user by their username. |
-| Users | `POST` | `/users` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Creates a new user. |
-| Users | `PUT` | `/users/{username}` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Updates an existing user. |
+| Users | `POST` | `/users` | `{ username: '', name: '', password: '', roleId: 'Admin/Standard' }` | Creates a new user. |
+| Users | `PUT` | `/users/{username}` | `{ username: '', name: '', password: '', roleId: 'Admin/Standard' }` | Updates an existing user. |
 | Users | `DELETE` | `/users/{username}` | | Deletes an existing user. |
 | Super Powers | `GET` | `/super-powers` | | Gets the list of super powers. |
 | Super Powers | `GET` | `/super-powers/{id}` | | Gets a single super power by its ID. |
@@ -138,7 +138,7 @@ Every action executed by a user that modifies some content will be mapped by an 
 
 This service is injected in database hooks, so for each modification action an audit event will be dispatched and registered in database with following information:
 
-- entity name (Super Powers etc)
+- entity name (Super Powers, Super Heroes, User etc)
 - entity ID (or string `"<array>"` if a list is returned)
 - action (`CREATE`, `UPDATE` or `DELETE`)
 - username that triggered the action
