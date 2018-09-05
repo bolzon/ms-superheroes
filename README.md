@@ -134,11 +134,11 @@ Users are divided in two roles:
 
 ### Audit
 
-Every action executed by a user will be mapped by an Audit Service.
+Every action executed by a user that modifies some content will be mapped by an Audit Service.
 
-This service is injected in database hooks and for each action, an audit event is dispatched to be registered in database and includes:
+This service is injected in database hooks, so for each modification action an audit event will be dispatched and registered in database with following information:
 
-- entity name
+- entity name (Super Powers etc)
 - entity ID (or string `"<array>"` if a list is returned)
 - action (`CREATE`, `UPDATE` or `DELETE`)
 - username that triggered the action
