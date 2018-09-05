@@ -59,7 +59,6 @@ It was implemented following microservices architecture and provides a REST API 
 
 - Super Heroes
 - Super Powers
-- Area of Protection
 - Users
 
 
@@ -75,39 +74,38 @@ The REST API follows some standards, such as:
 
 List of contents is paginated and uses query params `page` and `per_page` to specify the range of contents you want to list.
 
-- `page` - the page you want to list
-- `per_page` - number of items to consider per page
+- `page` - number of page you want to list
+- `per_page` - number of items to list per page, limited in 100
 
 This standard was based on [GitHub pagination standard](https://developer.github.com/v3/guides/traversing-with-pagination/#navigating-through-the-pages), without considering the `Link` header.
 
 ##### Total count
 
-When calling a route that returns a list of contents, apart from pagination standard, it also uses a header to specify the total number of items for the given query, so the client can adjust their pagination as they want.
+When calling a route that returns a list of contents, apart the pagination standard, it also uses a header to specify the total number of items for the given query, so the client can adjust their pagination as well as they want.
 
-Total number of items is returned in header `X-Total-Count`.
+Total number of items is returned on header `X-Total-Count` in `GET` routes.
 
 
 ### Authentication
 
-To call the API it's necessary to authenticate the caller through the `/auth` endpoint, that will return a JWT token to be used for every call as bearer token in `Authorization` header.
+To call the API it's necessary to authenticate the caller through the `/auth` endpoint, that will return a JWT token to be used for every call as bearer token in `Authorization` header such as following:
+
+```
+Authorization: bearer <jwt-token>
+```
 
 
 ### Authorization
 
 Users are divided in two roles:
 
-- Admin
-- Standard
-
-Admin users are able to do whatever they want.
-
-Standard users are able just to:
-
-- list super heroes
-- view a single hero
-- list super powers
-- view a single super power
-- _as a bonus feature:_ give a geo location in order to get nearest 8 super heroes
+- **Admin:** able to do whatever they want.
+- **Standard:** able to:
+  - list super heroes
+  - view a single hero
+  - list super powers
+  - view a single super power
+  - _as a bonus feature:_ give a geo location in order to get nearest 8 super heroes
 
 
 ### Endpoints
@@ -115,44 +113,14 @@ Standard users are able just to:
 
 #### Authentication
 
-##### `POST /auth`
-
-Authenticates a user by validating their username/password and gererating a new token in JWT format.
-
-Body:
-
-`{ username: '', password: '' }`
-
-
-#### Users
-
-##### `GET /users`
-
-Gets the list of users.
-
-##### `GET /users/{username}`
-
-Get a single user by their username.
-
-##### `POST /users`
-
-Creates a new user.
-
-Body:
-
-`{ username: '', name: '', password: '', roleId: 'Admin|Standard' }`
-
-##### `PUT /users/{username}`
-
-Updates an existing user.
-
-Body:
-
-`{ username: '', name: '', password: '', roleId: 'Admin|Standard' }`
-
-##### `DELETE /users/{username}`
-
-Deletes an existing user.
+| Module | Verb   | URL | Body | Description |
+|--------|--------|-----|------|-------------|
+| Auth   | `POST` | `/auth` | `{ username: '', password: '' }` | Authenticates a user by validating their username/password and gererating a new token in JWT format. |
+| Users | `GET`  | `/users` | | Gets the list of users. |
+| " | `GET`  | `/users/{username}` | | Get a single user by their username. |
+| " | `POST` | `/users` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Creates a new user. |
+| " | `PUT` | `/users/{username}` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Updates an existing user. |
+| " | `DELETE` | `/users/{username}` | | Deletes an existing user. |
 
 
 #### Super Powers
