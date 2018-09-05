@@ -108,10 +108,7 @@ Users are divided in two roles:
   - _as a bonus feature:_ give a geo location in order to get nearest 8 super heroes
 
 
-### Endpoints
-
-
-#### Authentication
+### List of endpoints
 
 | Module | Verb   | URL | Body | Description |
 |--------|--------|-----|------|-------------|
