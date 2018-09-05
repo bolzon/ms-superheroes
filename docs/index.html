@@ -82,69 +82,162 @@ npm docker:start</code></pre><p>Now install project dependencies.</p>
 <ul>
 <li>Super Heroes</li>
 <li>Super Powers</li>
-<li>Area of Protection</li>
 <li>Users</li>
 </ul>
 <h3>API</h3><p>This microservice uses REST routes to access or modify contents.</p>
 <h4>Considerations</h4><p>The REST API follows some standards, such as:</p>
 <h5>Pagination</h5><p>List of contents is paginated and uses query params <code>page</code> and <code>per_page</code> to specify the range of contents you want to list.</p>
 <ul>
-<li><code>page</code> - the page you want to list</li>
-<li><code>per_page</code> - number of items to consider per page</li>
+<li><code>page</code> - number of page you want to list</li>
+<li><code>per_page</code> - number of items to list per page, limited in 100</li>
 </ul>
 <p>This standard was based on <a href="https://developer.github.com/v3/guides/traversing-with-pagination/#navigating-through-the-pages">GitHub pagination standard</a>, without considering the <code>Link</code> header.</p>
-<h5>Total count</h5><p>When calling a route that returns a list of contents, apart from pagination standard, it also uses a header to specify the total number of items for the given query, so the client can adjust their pagination as they want.</p>
-<p>Total number of items is returned in header <code>X-Total-Count</code>.</p>
-<h3>Authentication</h3><p>To call the API it's necessary to authenticate the caller through the <code>/auth</code> endpoint, that will return a JWT token to be used for every call as bearer token in <code>Authorization</code> header.</p>
-<h3>Authorization</h3><p>Users are divided in two roles:</p>
+<h5>Total count</h5><p>When calling a route that returns a list of contents, apart the pagination standard, it also uses a header to specify the total number of items for the given query, so the client can adjust their pagination as well as they want.</p>
+<p>Total number of items is returned on header <code>X-Total-Count</code> in <code>GET</code> routes.</p>
+<h3>Authentication</h3><p>To call the API it's necessary to authenticate the caller through the <code>/auth</code> endpoint, that will return a JWT token to be used for every call as bearer token in <code>Authorization</code> header such as following:</p>
+<pre class="prettyprint source"><code>Authorization: bearer &lt;jwt-token></code></pre><h3>Authorization</h3><p>Users are divided in two roles:</p>
 <ul>
-<li>Admin</li>
-<li>Standard</li>
-</ul>
-<p>Admin users are able to do whatever they want.</p>
-<p>Standard users are able just to:</p>
-<ul>
+<li><strong>Admin:</strong> able to do whatever they want.</li>
+<li><strong>Standard:</strong> able to:<ul>
 <li>list super heroes</li>
 <li>view a single hero</li>
 <li>list super powers</li>
 <li>view a single super power</li>
 <li><em>as a bonus feature:</em> give a geo location in order to get nearest 8 super heroes</li>
 </ul>
-<h3>Endpoints</h3><h4>Authentication</h4><h5><code>POST /auth</code></h5><p>Authenticates a user by validating their username/password and gererating a new token in JWT format.</p>
-<p>Body:</p>
-<p><code>{ username: '', password: '' }</code></p>
-<h4>Users</h4><h5><code>GET /users</code></h5><p>Gets the list of users.</p>
-<h5><code>GET /users/{username}</code></h5><p>Get a single user by their username.</p>
-<h5><code>POST /users</code></h5><p>Creates a new user.</p>
-<p>Body:</p>
-<p><code>{ username: '', name: '', password: '', roleId: 'Admin|Standard' }</code></p>
-<h5><code>PUT /users/{username}</code></h5><p>Updates an existing user.</p>
-<p>Body:</p>
-<p><code>{ username: '', name: '', password: '', roleId: 'Admin|Standard' }</code></p>
-<h5><code>DELETE /users/{username}</code></h5><p>Deletes an existing user.</p>
-<h4>Super Powers</h4><h5><code>GET /super-powers</code></h5><p>Gets the list of super powers.</p>
-<h5><code>GET /super-powers/{id}</code></h5><p>Gets a single super power by its ID.</p>
-<h5><code>POST /super-powers</code></h5><p>Creates a new super power.</p>
-<p>Body:</p>
-<p><code>{ name: '', description: '' }</code></p>
-<h5><code>PUT /super-powers/{id}</code></h5><p>Updates an existing super power.</p>
-<p>Body:</p>
-<p><code>{ name: '', description: '' }</code></p>
-<h5><code>DELETE /super-powers/{id}</code></h5><p>Deletes an existing super power by its ID.</p>
-<h4>Super Heroes</h4><h5><code>GET /super-heroes</code></h5><p>Gets the list of super hero.</p>
-<h5><code>GET /super-heroes/{id}</code></h5><p>Gets a single super hero by its ID.</p>
-<h5><code>POST /super-heroes</code></h5><p>Creates a new super hero.</p>
-<p>Body:</p>
-<p><code>{ name: '', alias: '' }</code></p>
-<h5><code>PUT /super-heroes/{id}</code></h5><p>Updates an existing super hero.</p>
-<p>Body:</p>
-<p><code>{ name: '', alias: '' }</code></p>
-<h5><code>DELETE /super-heroes/{id}</code></h5><p>Deletes an existing super hero by its ID.</p>
-<h4>Audit</h4><h4><code>POST /audit</code></h4><p>Register client to listen to audit events.</p>
-<h3>Audit</h3><p>Every action executed by a user will be mapped by an Audit Service.</p>
-<p>This service is injected in database hooks and for each action, an audit event is dispatched to be registered in database and includes:</p>
+</li>
+</ul>
+<h3>Endpoints</h3><h4>Authentication</h4><table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Verb</th>
+<th>URL</th>
+<th>Body</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auth</td>
+<td><code>POST</code></td>
+<td><code>/auth</code></td>
+<td><code>{ username: '', password: '' }</code></td>
+<td>Authenticates a user by validating their username/password and gererating a new token in JWT format.</td>
+</tr>
+<tr>
+<td>Users</td>
+<td><code>GET</code></td>
+<td><code>/users</code></td>
+<td></td>
+<td>Gets the list of users.</td>
+</tr>
+<tr>
+<td>Users</td>
+<td><code>GET</code></td>
+<td><code>/users/{username}</code></td>
+<td></td>
+<td>Get a single user by their username.</td>
+</tr>
+<tr>
+<td>Users</td>
+<td><code>POST</code></td>
+<td><code>/users</code></td>
+<td>`{ username: '', name: '', password: '', roleId: 'Admin</td>
+<td>Standard' }`</td>
+<td>Creates a new user.</td>
+</tr>
+<tr>
+<td>Users</td>
+<td><code>PUT</code></td>
+<td><code>/users/{username}</code></td>
+<td>`{ username: '', name: '', password: '', roleId: 'Admin</td>
+<td>Standard' }`</td>
+<td>Updates an existing user.</td>
+</tr>
+<tr>
+<td>Users</td>
+<td><code>DELETE</code></td>
+<td><code>/users/{username}</code></td>
+<td></td>
+<td>Deletes an existing user.</td>
+</tr>
+<tr>
+<td>Super Powers</td>
+<td><code>GET</code></td>
+<td><code>/super-powers</code></td>
+<td></td>
+<td>Gets the list of super powers.</td>
+</tr>
+<tr>
+<td>Super Powers</td>
+<td><code>GET</code></td>
+<td><code>/super-powers/{id}</code></td>
+<td></td>
+<td>Gets a single super power by its ID.</td>
+</tr>
+<tr>
+<td>Super Powers</td>
+<td><code>POST</code></td>
+<td><code>/super-powers</code></td>
+<td><code>{ name: '', description: '' }</code></td>
+<td>Creates a new super power.</td>
+</tr>
+<tr>
+<td>Super Powers</td>
+<td><code>PUT</code></td>
+<td><code>/super-powers/{id}</code></td>
+<td><code>{ name: '', description: '' }</code></td>
+<td>Updates an existing super power.</td>
+</tr>
+<tr>
+<td>Super Powers</td>
+<td><code>DELETE</code></td>
+<td><code>/super-powers/{id}</code></td>
+<td></td>
+<td>Deletes an existing super power by its ID.</td>
+</tr>
+<tr>
+<td>Super Heroes</td>
+<td><code>GET</code></td>
+<td><code>/super-heroes</code></td>
+<td></td>
+<td>Gets the list of super hero.</td>
+</tr>
+<tr>
+<td>Super Heroes</td>
+<td><code>GET</code></td>
+<td><code>/super-heroes/{id}</code></td>
+<td></td>
+<td>Gets a single super hero by its ID.</td>
+</tr>
+<tr>
+<td>Super Heroes</td>
+<td><code>POST</code></td>
+<td><code>/super-heroes</code></td>
+<td><code>{ name: '', alias: '' }</code></td>
+<td>Creates a new super hero.</td>
+</tr>
+<tr>
+<td>Super Heroes</td>
+<td><code>PUT</code></td>
+<td><code>/super-heroes/{id}</code></td>
+<td><code>{ name: '', alias: '' }</code></td>
+<td>Updates an existing super hero.</td>
+</tr>
+<tr>
+<td>Super Heroes</td>
+<td><code>DELETE</code></td>
+<td><code>/super-heroes/{id}</code></td>
+<td></td>
+<td>Deletes an existing super hero by its ID.</td>
+</tr>
+</tbody>
+</table>
+<h3>Audit</h3><p>Every action executed by a user that modifies some content will be mapped by an Audit Service.</p>
+<p>This service is injected in database hooks, so for each modification action an audit event will be dispatched and registered in database with following information:</p>
 <ul>
-<li>entity name</li>
+<li>entity name (Super Powers etc)</li>
 <li>entity ID (or string <code>&quot;&lt;array&gt;&quot;</code> if a list is returned)</li>
 <li>action (<code>CREATE</code>, <code>UPDATE</code> or <code>DELETE</code>)</li>
 <li>username that triggered the action</li>
@@ -171,7 +264,7 @@ npm docker:start</code></pre><p>Now install project dependencies.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Sep 04 2018 11:45:25 GMT-0300 (-03)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Sep 05 2018 09:39:17 GMT-0300 (-03)
 </footer>
 
 <script> prettyPrint(); </script>
