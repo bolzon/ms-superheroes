@@ -117,80 +117,20 @@ Users are divided in two roles:
 |--------|--------|-----|------|-------------|
 | Auth   | `POST` | `/auth` | `{ username: '', password: '' }` | Authenticates a user by validating their username/password and gererating a new token in JWT format. |
 | Users | `GET`  | `/users` | | Gets the list of users. |
-| " | `GET`  | `/users/{username}` | | Get a single user by their username. |
-| " | `POST` | `/users` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Creates a new user. |
-| " | `PUT` | `/users/{username}` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Updates an existing user. |
-| " | `DELETE` | `/users/{username}` | | Deletes an existing user. |
-
-
-#### Super Powers
-
-##### `GET /super-powers`
-
-Gets the list of super powers.
-
-##### `GET /super-powers/{id}`
-
-Gets a single super power by its ID.
-
-##### `POST /super-powers`
-
-Creates a new super power.
-
-Body:
-
-`{ name: '', description: '' }`
-
-##### `PUT /super-powers/{id}`
-
-Updates an existing super power.
-
-Body:
-
-`{ name: '', description: '' }`
-
-##### `DELETE /super-powers/{id}`
-
-Deletes an existing super power by its ID.
-
-
-#### Super Heroes
-
-##### `GET /super-heroes`
-
-Gets the list of super hero.
-
-##### `GET /super-heroes/{id}`
-
-Gets a single super hero by its ID.
-
-##### `POST /super-heroes`
-
-Creates a new super hero.
-
-Body:
-
-`{ name: '', alias: '' }`
-
-##### `PUT /super-heroes/{id}`
-
-Updates an existing super hero.
-
-Body:
-
-`{ name: '', alias: '' }`
-
-##### `DELETE /super-heroes/{id}`
-
-Deletes an existing super hero by its ID.
-
-
-#### Audit
-
-#### `POST /audit`
-
-Register client to listen to audit events.
-
+| Users | `GET`  | `/users/{username}` | | Get a single user by their username. |
+| Users | `POST` | `/users` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Creates a new user. |
+| Users | `PUT` | `/users/{username}` | `{ username: '', name: '', password: '', roleId: 'Admin|Standard' }` | Updates an existing user. |
+| Users | `DELETE` | `/users/{username}` | | Deletes an existing user. |
+| Super Powers | `GET` | `/super-powers` | | Gets the list of super powers. |
+| Super Powers | `GET` | `/super-powers/{id}` | | Gets a single super power by its ID. |
+| Super Powers | `POST` | `/super-powers` | `{ name: '', description: '' }` | Creates a new super power. |
+| Super Powers | `PUT` |  `/super-powers/{id}` | `{ name: '', description: '' }` | Updates an existing super power. |
+| Super Powers | `DELETE` | `/super-powers/{id}` | | Deletes an existing super power by its ID. |
+| Super Heroes | `GET` | `/super-heroes` | | Gets the list of super hero. |
+| Super Heroes | `GET` | `/super-heroes/{id}` | | Gets a single super hero by its ID. |
+| Super Heroes | `POST`| `/super-heroes` | `{ name: '', alias: '' }` | Creates a new super hero. |
+| Super Heroes | `PUT` | `/super-heroes/{id}` | `{ name: '', alias: '' }` | Updates an existing super hero. |
+| Super Heroes | `DELETE` | `/super-heroes/{id}` | | Deletes an existing super hero by its ID. |
 
 ### Audit
 
