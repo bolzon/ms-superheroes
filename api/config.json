@@ -10,8 +10,8 @@
 	"token": {
 		"expiresIn": "1d",
 		"algorithm": "ES512",
-		"pvtKeyPath": "./api/auth-pvtkey.pem",
-		"pubKeyPath": "./api/auth-pubkey.pem"
+		"pvtKeyPath": "./api/keys/auth-pvtkey.pem",
+		"pubKeyPath": "./api/keys/auth-pubkey.pem"
 	},
 	"db": {
 		"database": "superheroes",
