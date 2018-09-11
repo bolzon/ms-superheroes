@@ -14,5 +14,5 @@ COPY scripts/db/dump.sql /docker-entrypoint-initdb.d
 
 EXPOSE 3306
 
-HEALTHCHECK --interval=2m --timeout=5s \
+HEALTHCHECK --interval=2m --timeout=5s --start-period=30s \
 	CMD mysql -D$MYSQL_DATABASE -u$MYSQL_USER -p$MYSQL_PASSWORD -e '\q' || exit 1
