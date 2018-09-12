@@ -7,7 +7,7 @@ env:
   - CXX=g++-5
   - DB_TEST=true
 before_install:
-  - apt install python make g++
+  - apt-get install python make g++
   - npm install -g mocha@5.2.x
   - npm install -g nyc@13.0.x
   - npm install -g node-gyp
