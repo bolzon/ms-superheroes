@@ -1,13 +1,19 @@
 sudo: required
-dist: 
+dist: xenial
 language: node_js
 nodejs:
   - "8"
   - "10"
 env:
   - DB_TEST=true
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 before_install:
-  - sudo apt-get install -y g++ gcc autotools-dev automake make cmake pkg-config libssl-dev libevent-dev bsdmainutils build-essential python2.7
   - npm install -g node-pre-gyp node-gyp mocha@5.2.x nyc@13.0.x
 install:
   - npm install
