@@ -5,6 +5,12 @@ const Sequelize = require('sequelize');
 
 module.exports = app => {
 
+	if (process.env.DB_TEST === 'true') {
+		app.config.db.params.dialect = 'sqlite';
+		app.config.db.params.storage = ':memory:';
+		app.logger.info('Using sqlite/test database');
+	}
+
 	const sequelize = new Sequelize(
 		app.config.db.database,
 		app.config.db.username,

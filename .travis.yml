@@ -5,13 +5,13 @@ nodejs:
   - "10"
 services:
   - docker
+env:
+  - DB_TEST=true
 before_install:
   - sudo /etc/init.d/mysql stop
   - npm install -g mocha@5.2.x
   - npm install -g nyc@13.0.x
 install:
-  - npm run docker:install
-  - npm run docker:start
   - npm install
 script:
   - npm test

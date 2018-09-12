@@ -1,3 +1,3 @@
 
-require('./server').start()
-	.then(() => console.log('Server is up'));
+const server = require('./server');
+server.start().then(() => server.logger.info('Server is up'));
