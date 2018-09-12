@@ -6,7 +6,7 @@ nodejs:
 env:
   - DB_TEST=true
 before_install:
-  - apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python
+  - apt install g++ gcc libgcc libstdc++ linux-headers make python
   - npm install -g mocha@5.2.x
   - npm install -g nyc@13.0.x
   - npm install -g node-gyp
