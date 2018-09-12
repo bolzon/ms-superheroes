@@ -1,5 +1,5 @@
 sudo: required
-dist: xenial
+dist: 
 language: node_js
 nodejs:
   - "8"
@@ -7,8 +7,8 @@ nodejs:
 env:
   - DB_TEST=true
 before_install:
-  - sudo apt-get install -y libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils build-essential python2.7
-  - npm install -g node-gyp mocha@5.2.x nyc@13.0.x
+  - sudo apt-get install -y g++ gcc libgcc libstdc++ linux-headerslibtool autotools-dev automake make cmake pkg-config libssl-dev libevent-dev bsdmainutils build-essential python2.7
+  - npm install -g node-pre-gyp node-gyp mocha@5.2.x nyc@13.0.x
 install:
   - npm install
 script:
