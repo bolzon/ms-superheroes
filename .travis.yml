@@ -14,7 +14,7 @@ addons:
     packages:
       - g++-4.8
 before_install:
-  - sudo npm install -g mocha@5.2.x nyc@13.0.x
+  - npm install -g mocha@5.2.x nyc@13.0.x
 install:
   - npm install
 script:
