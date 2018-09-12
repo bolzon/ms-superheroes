@@ -3,7 +3,7 @@ dist: xenial
 addons:
   apt:
     packages:
-      - cmake
+      - make
       - g++-5
       - gcc-5
 language: node_js
