@@ -7,7 +7,7 @@ nodejs:
 env:
   - DB_TEST=true
 before_install:
-  - sudo apt-get install -y build-essential g++ make python
+  - sudo apt-get install -y build-essential g++ make python2.7
   - npm install -g mocha@5.2.x nyc@13.0.x node-gyp
 install:
   - npm install
