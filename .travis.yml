@@ -7,7 +7,7 @@ nodejs:
 env:
   - DB_TEST=true
 before_install:
-  - sudo apt-get install -y g++ gcc libgcc libstdc++ linux-headerslibtool autotools-dev automake make cmake pkg-config libssl-dev libevent-dev bsdmainutils build-essential python2.7
+  - sudo apt-get install -y g++ gcc autotools-dev automake make cmake pkg-config libssl-dev libevent-dev bsdmainutils build-essential python2.7
   - npm install -g node-pre-gyp node-gyp mocha@5.2.x nyc@13.0.x
 install:
   - npm install
