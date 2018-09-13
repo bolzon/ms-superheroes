@@ -14,31 +14,25 @@ const adminUser = {
 describe('Server', () => {
 
 	before(async () => {
+
 		server = require('../server');
 		await server.start();
-		console.log(await server.db.sequelize.queryInterface.showAllSchemas());
-		await server.db.models.UserRole.findOrCreate({
-			where: { name: 'Admin' },
-			defaults: {
-				name: 'Admin',
-				description: 'Admin users can list and modify contents'
-			}
+
+		await server.db.models.UserRole.create({
+			name: 'Admin',
+			description: 'Admin users can list and modify contents'
 		});
-		await server.db.models.UserRole.findOrCreate({
-			where: { name: 'Standard' },
-			defaults: {
-				name: 'Standard',
-				description: 'Standard users can just list contents'
-			}
+
+		await server.db.models.UserRole.create({
+			name: 'Standard',
+			description: 'Standard users can just list contents'
 		});
-		await server.db.models.User.findOrCreate({
-			where: { username: adminUser.username },
-			defaults: {
-				username: adminUser.username,
-				name: 'Administrator',
-				password: adminUser.password,
-				roleId: 'Admin'
-			}
+
+		await server.db.models.User.create({
+			username: adminUser.username,
+			name: 'Administrator',
+			password: adminUser.password,
+			roleId: 'Admin'
 		});
 	});
 
