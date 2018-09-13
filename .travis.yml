@@ -1,17 +1,19 @@
+os: linux
 sudo: required
-dist: xenial
 language: node_js
-node_js:
-  - "7"
+node_js: 8.11.4
 env:
   - DB_TEST=true
-  - CXX=g++-5
+  - CXX=g++-4.8
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-5
+      - g++-4.8
+      - gcc-4.8
+      - python2.7
+      - openssl
 before_install:
   - npm install -g mocha@5.2.x nyc@13.0.x
 install:
