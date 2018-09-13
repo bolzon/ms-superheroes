@@ -3,14 +3,12 @@ sudo: required
 language: node_js
 node_js: 8.11.4
 env:
-  - CXX=g++-4.8
   - NODE_ENV=test
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
       - openssl
 before_install:
   - npm install -g mocha@5.2.x nyc@13.0.x
