@@ -18,26 +18,32 @@ First of all, install modules listed in following table:
 | Docker   | 17.03.2   |
 
 
-Then install and start MySQL docker instance.
+### Installing and testing
+
+Install project dependencies.
+
+```bash
+npm install
+```
+
+Run tests to get test results and coverage.
+
+```bash
+npm test
+npm run coverage
+```
+
+
+### Running
+
+To run the app locally, it's necessary to install and start a MySQL docker instance.
 
 ```bash
 npm docker:install
 npm docker:start
 ```
 
-Now install project dependencies.
-
-```bash
-npm install
-```
-
-And run tests to get test results and code coverage.
-
-```bash
-npm test
-```
-
-To start the app locally:
+Now you can start the app locally.
 
 ```bash
 npm start
