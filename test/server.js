@@ -5,6 +5,7 @@ const helpers = require('./helpers');
 const HttpHelper = helpers.HttpHelper;
 const HttpStatus = HttpHelper.Status;
 
+let server;
 const adminUser = {
 	username: 'admin',
 	password: 'admin'
@@ -13,7 +14,33 @@ const adminUser = {
 describe('Server', () => {
 
 	before(async () => {
-		await require('../server').start();
+
+		server = require('../server');
+		await server.start();
+
+		await server.db.models.UserRole.create({
+			name: 'Admin',
+			description: 'Admin users can list and modify contents'
+		});
+
+		await server.db.models.UserRole.create({
+			name: 'Standard',
+			description: 'Standard users can just list contents'
+		});
+
+		await server.db.models.User.create({
+			username: adminUser.username,
+			name: 'Administrator',
+			password: adminUser.password,
+			roleId: 'Admin'
+		});
+
+		await server.db.models.ProtectionArea.create({
+			name: 'Leningrad',
+			lat: 59.939095,
+			long: 30.315868,
+			radius: 200
+		});
 	});
 
 	describe('Authentication', () => {

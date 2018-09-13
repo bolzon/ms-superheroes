@@ -5,9 +5,15 @@ const Sequelize = require('sequelize');
 
 module.exports = app => {
 
-	if (process.env.DB_TEST === 'true') {
-		app.config.db.params.dialect = 'sqlite';
-		app.config.db.params.storage = ':memory:';
+	const dbConfig = JSON.parse(fs.readFileSync(path.resolve('api/db', 'config.json')));
+
+	app.config.db = process.env.NODE_ENV === 'test'
+			? dbConfig.test
+			: process.env.NODE_ENV === 'production'
+			? dbConfig.production
+			: dbConfig.development;
+
+	if (process.env.NODE_ENV === 'test') {
 		app.logger.info('Using sqlite/test database');
 	}
 
@@ -15,7 +21,7 @@ module.exports = app => {
 		app.config.db.database,
 		app.config.db.username,
 		app.config.db.password,
-		app.config.db.params
+		app.config.db
 	);
 
 	const db = {
@@ -24,10 +30,10 @@ module.exports = app => {
 		models: {}
 	};
 
-	const dir = path.join(__dirname, 'models');
+	const dir = path.resolve(__dirname, 'db', 'models');
 
 	fs.readdirSync(dir).forEach(file => {
-		const modelDir = path.join(dir, file);
+		const modelDir = path.resolve(dir, file);
 		const model = sequelize.import(modelDir);
 		db.models[model.name] = model;
 	});
