@@ -1,21 +1,19 @@
 sudo: required
 dist: xenial
 language: node_js
-nodejs:
+node_js:
   - "8"
-  - "10"
 env:
   - DB_TEST=true
   - CXX=g++-5
-before_install:
-  - sudo apt-get update
-  - npm install -g mocha@5.2.x nyc@13.0.x node-gyp
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
       - g++-5
+before_install:
+  - npm install -g mocha@5.2.x nyc@13.0.x
 install:
   - npm install
 script:
