@@ -34,6 +34,13 @@ describe('Server', () => {
 			password: adminUser.password,
 			roleId: 'Admin'
 		});
+
+		await server.db.models.ProtectionArea.create({
+			name: 'Leningrad',
+			lat: 59.939095,
+			long: 30.315868,
+			radius: 200
+		});
 	});
 
 	describe('Authentication', () => {
