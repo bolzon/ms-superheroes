@@ -2,7 +2,7 @@ sudo: required
 dist: xenial
 language: node_js
 node_js:
-  - "8"
+  - "7"
 env:
   - DB_TEST=true
   - CXX=g++-5
