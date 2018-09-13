@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "NODE_ENV=test nyc mocha -S --exit",
+    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "doc": "jsdoc -c jsdoc.json .",
     "docker:install": "docker build -q -t mysql-superheroes -f scripts/db/Dockerfile .",
     "docker:start": "docker run -d -p 4441:3306 mysql-superheroes"
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "codecov": "^3.1.0",
     "jsdoc": "^3.5.5",
     "mocha": "^5.2.0",
     "node-fetch": "^2.2.0",

@@ -11,11 +11,12 @@ addons:
     packages:
       - openssl
 before_install:
-  - npm install -g mocha@5.2.x nyc@13.0.x
+  - npm install -g mocha@5.2.x nyc@13.0.x codecov@3.1.x
 install:
   - npm install
 script:
   - npm test
+  - npm run coverage
 cache:
   directories:
     - "node_modules"
