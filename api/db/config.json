@@ -1,0 +1,42 @@
+{
+	"development": {
+		"database": "superheroes",
+		"username": "superuser",
+		"password": "superpass",
+		"port": 4441,
+		"host": "127.0.0.1",
+		"dialect": "mysql",
+		"logging": false,
+		"operatorsAliases": false,
+		"storage": "superheroes",
+		"define": {
+			"underscored": false
+		}
+	},
+	"production": {
+		"database": "superheroes",
+		"username": "superuser",
+		"password": "superpass",
+		"port": 4441,
+		"host": "0.0.0.0",
+		"dialect": "mysql",
+		"logging": false,
+		"operatorsAliases": false,
+		"storage": "superheroes",
+		"define": {
+			"underscored": false
+		}
+	},
+	"test": {
+		"database": "superheroes",
+		"username": "superuser",
+		"password": "superpass",
+		"dialect": "sqlite",
+		"logging": false,
+		"operatorsAliases": false,
+		"storage": ":memory:",
+		"define": {
+			"underscored": false
+		}
+	}
+}

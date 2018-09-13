@@ -33,33 +33,3 @@ INSERT INTO Users (username, name, password, roleId)
 	WHERE NOT EXISTS (
 		SELECT name FROM Users WHERE username = 'admin'
 	);
-
--- PROTECTION AREAS
-
-INSERT INTO ProtectionAreas (name, lat, `long`, radius)
-	SELECT 'Campinas', -22.907104, -47.063240, 80
-	FROM dual
-	WHERE NOT EXISTS (
-		SELECT name FROM ProtectionAreas WHERE name = 'Campinas'
-	);
-
-INSERT INTO ProtectionAreas (name, lat, `long`, radius)
-	SELECT 'Tallin', 59.437411, 24.745181, 30
-	FROM dual
-	WHERE NOT EXISTS (
-		SELECT name FROM ProtectionAreas WHERE name = 'Tallin'
-	);
-
-INSERT INTO ProtectionAreas (name, lat, `long`, radius)
-	SELECT 'Leningrad', 59.939095, 30.315868, 200
-	FROM dual
-	WHERE NOT EXISTS (
-		SELECT name FROM ProtectionAreas WHERE name = 'Leningrad'
-	);
-
-INSERT INTO ProtectionAreas (name, lat, `long`, radius)
-	SELECT 'Novosibirsk', 55.030199, 82.920430, 350
-	FROM dual
-	WHERE NOT EXISTS (
-		SELECT name FROM ProtectionAreas WHERE name = 'Novosibirsk'
-	);

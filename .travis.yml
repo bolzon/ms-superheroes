@@ -3,8 +3,8 @@ sudo: required
 language: node_js
 node_js: 8.11.4
 env:
-  - DB_TEST=true
   - CXX=g++-4.8
+  - NODE_ENV=test
 addons:
   apt:
     sources:
@@ -15,7 +15,8 @@ addons:
       - python2.7
       - openssl
 before_install:
-  - npm install -g mocha@5.2.x nyc@13.0.x
+  - npm install -g mocha@5.2.x nyc@13.0.x sequelize-cli@4.1.x
+  - sequelize db:seed:all
 install:
   - npm install
 script:

@@ -12,21 +12,5 @@
 		"algorithm": "ES512",
 		"pvtKeyPath": "./api/keys/auth-pvtkey.pem",
 		"pubKeyPath": "./api/keys/auth-pubkey.pem"
-	},
-	"db": {
-		"database": "superheroes",
-		"username": "superuser",
-		"password": "superpass",
-		"params": {
-			"port": 4441,
-			"host": "127.0.0.1",
-			"dialect": "mysql",
-			"logging": false,
-			"operatorsAliases": false,
-			"storage": "superheroes",
-			"define": {
-				"underscored": false
-			}
-		}
 	}
 }
