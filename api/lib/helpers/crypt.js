@@ -22,7 +22,7 @@ module.exports.generateJWT = async payload => {
 };
 
 /**
- * Encodes a password by generating a new salt, crypting ans hashing it.
+ * Encodes a password by generating a new salt, crypting and hashing it.
  * @param {String} password Password to be encoded as plain string.
  * @returns {String} Base64 encoded password.
  */
